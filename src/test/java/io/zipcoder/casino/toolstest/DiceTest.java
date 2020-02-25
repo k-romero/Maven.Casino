@@ -17,6 +17,19 @@ public class DiceTest {
         Assert.assertEquals(dice.getNumberOfDice(), expected);
     }
 
+    @Test
+    public void TestGetNumberOfDice(){
+        // Given
+        Integer numDice = 5;
+        Dice dice = new Dice(numDice);
+        // When
+        Integer expected = 6;
+        dice.setNumberOfDice(6);
+        Integer actual = dice.getNumberOfDice();
+
+        // Then
+        Assert.assertEquals(expected, actual);
+    }
 
     @Test
     public void TestTossAndSum(){
