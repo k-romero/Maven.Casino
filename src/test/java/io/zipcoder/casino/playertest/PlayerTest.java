@@ -176,6 +176,4 @@ public class PlayerTest {
         Assert.assertTrue(playerTest.isDrunk());
     }
 
-
-
 }
