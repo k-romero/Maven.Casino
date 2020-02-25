@@ -4,6 +4,8 @@ package io.zipcoder.casino.toolstest;
 import io.zipcoder.casino.tools.Card;
 import io.zipcoder.casino.tools.Deck;
 import io.zipcoder.casino.tools.Face;
+import io.zipcoder.casino.tools.Suit;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Stack;
@@ -12,26 +14,10 @@ public class DeckTest {
 
     @Test
     public void peekTest(){
-        Card card = new Card();
-        Face face = new Face();
-        Stack<Card> cardStack = new Stack<Card>();
         Deck deck = new Deck();
-
-    cardStack.add();
-
-    //Given
-
-
-
-    Card actual = deck.peek();
-
-
-
-    //When
-
-
-    //Expected
-
+        Card expected = new Card(Suit.DIAMOND, Face.KING);
+        Card actual = deck.peek();
+        Assert.assertEquals(expected.toString(),actual.toString());
 
     }
 
