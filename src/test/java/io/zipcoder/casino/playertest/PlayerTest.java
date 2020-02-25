@@ -140,6 +140,42 @@ public class PlayerTest {
         Assert.assertFalse(playerTest.isDrunk());
     }
 
+    @Test
+    public void giveDrinkTest(){
+        int id = 1000;
+        String name = "Player Test";
+        int playerFunds = 200;
+        boolean isDrunk = true;
+
+        Player playerTest = new Player(id,name,playerFunds,isDrunk);
+
+        for (int i = 0; i < 3; i++) {
+            playerTest.giveDrink();
+        }
+        int expected = 3;
+        int actual = playerTest.getDrinks();
+
+        Assert.assertEquals(expected,actual);
+    }
+
+    @Test
+    public void isDrunkAfterDrinkTest(){
+        int id = 1000;
+        String name = "Player Test";
+        int playerFunds = 200;
+        boolean isDrunk = true;
+
+        Player playerTest = new Player(id,name,playerFunds,isDrunk);
+
+        for (int i = 0; i < 3; i++) {
+            playerTest.giveDrink();
+        }
+        int expected = 3;
+        int actual = playerTest.getDrinks();
+
+        Assert.assertTrue(playerTest.isDrunk());
+    }
+
 
 
 }

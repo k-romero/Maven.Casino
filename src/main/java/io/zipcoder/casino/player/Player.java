@@ -6,6 +6,7 @@ public class Player {
     String name;
     int playerFunds;
     boolean isDrunk;
+    int drinks = 0;
 
     public Player(int id, String name, int playerFunds, boolean isDrunk) {
         this.id = id;
@@ -39,10 +40,21 @@ public class Player {
     }
 
     public boolean isDrunk() {
+        if(this.drinks > 3){
+            this.isDrunk = true;
+        }
         return isDrunk;
     }
 
     public void setDrunk(boolean drunk) {
         isDrunk = drunk;
+    }
+
+    public void giveDrink(){
+        this.drinks += 1;
+    }
+
+    public int getDrinks() {
+        return drinks;
     }
 }
