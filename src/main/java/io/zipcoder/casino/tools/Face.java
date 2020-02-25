@@ -16,16 +16,16 @@ public enum Face {
     QUEEN("Q", 12),
     KING("K", 13);
 
-    String faceValue;
+    String faceString;
     int value;
 
     private Face(String f, int v){
-        this.faceValue = f;
+        this.faceString = f;
         this.value = v;
     }
 
-    public String getFaceValue(){
-        return faceValue;
+    public String getFaceString(){
+        return faceString;
     }
 
     public int getValue(){
