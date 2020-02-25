@@ -22,12 +22,24 @@ public class Deck {
         return deck.peek();
     }
     public void remove(){
-      deck.pop();
+        deck.pop();
     }
     public void shuffle(){
         Collections.shuffle(deck);
     }
+    public int checkSize(){
+        return deck.size();
+    }
     public Stack getDeck(){
         return deck;
+    }
+
+    @Override
+    public String toString(){
+        String s = "";
+        for( Card c:deck){
+            s += c.toString();
+        }
+        return s;
     }
 }
