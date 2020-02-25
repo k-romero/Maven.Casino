@@ -1,4 +1,4 @@
 package io.zipcoder.casino.dealer;
 
-public class CardDealer {
+public class CardDealer extends Dealer {
 }
