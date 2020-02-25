@@ -28,9 +28,9 @@ public class PlayerTest {
         Player playerTest = new Player(id,name,playerFunds,isDrunk);
 
         int expected = 1000;
-        int acutal = playerTest.getId();
+        int actual = playerTest.getId();
 
-        Assert.assertEquals(expected,acutal);
+        Assert.assertEquals(expected,actual);
     }
 
     @Test

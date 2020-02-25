@@ -19,7 +19,7 @@ public enum Face {
     String faceValue;
     int value;
 
-    private Face(String f, int v){
+    public Face(String f, int v){
         this.faceValue = f;
         this.value = v;
     }
