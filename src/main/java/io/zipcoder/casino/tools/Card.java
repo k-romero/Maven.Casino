@@ -18,7 +18,7 @@ public class Card {
 
     @Override
     public String toString() {
-        return suit.getSuitName()+face.getFaceString();
+        return (face.getFaceString() + " " + suit.getSuitName());
     }
 }
 
