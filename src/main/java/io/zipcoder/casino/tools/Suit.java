@@ -2,18 +2,21 @@ package io.zipcoder.casino.tools;
 
 public enum Suit {
 
-    CLUBS('\u2663'),
-    SPADES('\u2660'),
-    HEARTS('\u2665'),
-    DIAMONDS('\u2666');
+    CLUB("Club",'\u2663'),
+    SPADE("Spade",'\u2660'),
+    HEART("Heart",'\u2665'),
+    DIAMOND("Diamond",'\u2666');
 
+    private String suitName;
     private char suitIcon;
 
-    private Suit(char s){
-        this.suitIcon = s;
+    private Suit(String suitName, char symbol){
+        this.suitName = suitName;
+        this.suitIcon = symbol;
     }
 
-    public char getSuitIcon(){
+    public String getSuitName(){ return suitName;}
+    public char getSuitSymbol(){
         return suitIcon;
     }
 
