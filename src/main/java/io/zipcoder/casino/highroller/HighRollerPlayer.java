@@ -1,9 +1,10 @@
 package io.zipcoder.casino.highroller;
 
+import io.zipcoder.casino.player.GamblingPlayer;
 import io.zipcoder.casino.player.Player;
 import io.zipcoder.casino.tools.Dice;
 
-public class HighRollerPlayer {
+public class HighRollerPlayer implements GamblingPlayer {
 
     Integer value;
     Dice dice;
@@ -29,5 +30,13 @@ public class HighRollerPlayer {
         Integer updatedFund = someFund + newFund;
         player1.setPlayerFunds(updatedFund);
 
+    }
+
+    public Integer getRanking() {
+        return 0;
+    }
+
+    public Integer getNumberOfWins() {
+        return 0;
     }
 }
