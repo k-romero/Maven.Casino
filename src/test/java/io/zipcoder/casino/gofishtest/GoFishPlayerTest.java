@@ -1,15 +1,16 @@
-package io.zipcoder.casino.blackjacktest;
-import io.zipcoder.casino.blackJack.BlackJackPlayer;
+package io.zipcoder.casino.gofishtest;
+
+import io.zipcoder.casino.gofish.GoFishPlayer;
 import io.zipcoder.casino.player.Player;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class BlackJackPlayerTest {
+public class GoFishPlayerTest {
 
     @Test
     public void constructorTest(){
         Player p = new Player(10, "Apollo", 100, false);
-        BlackJackPlayer gfp = new BlackJackPlayer(p);
+        GoFishPlayer gfp = new GoFishPlayer(p);
 
         String actualName = gfp.getPlayerData().getName();
         String expectedName = "Apollo";
@@ -20,7 +21,7 @@ public class BlackJackPlayerTest {
     @Test
     public void getPlayerData(){
         Player p = new Player(10, "Apollo", 100, false);
-        BlackJackPlayer gfp = new BlackJackPlayer(p);
+        GoFishPlayer gfp = new GoFishPlayer(p);
 
         String actualName = gfp.getPlayerData().getName();
         int actualId = gfp.getPlayerData().getId();
@@ -34,7 +35,7 @@ public class BlackJackPlayerTest {
     @Test
     public void placeBetTest(){
         Player p = new Player(10, "Apollo", 100, false);
-        BlackJackPlayer gfp = new BlackJackPlayer(p);
+        GoFishPlayer gfp = new GoFishPlayer(p);
         gfp.placeBet(60);
         int actualMoney = p.getPlayerFunds();
 
@@ -44,7 +45,7 @@ public class BlackJackPlayerTest {
     @Test
     public void payOutTest(){
         Player p = new Player(10, "Apollo", 100, false);
-        BlackJackPlayer gfp = new BlackJackPlayer(p);
+        GoFishPlayer gfp = new GoFishPlayer(p);
         gfp.placeBet(20);
         int actualMoney = p.getPlayerFunds();
 

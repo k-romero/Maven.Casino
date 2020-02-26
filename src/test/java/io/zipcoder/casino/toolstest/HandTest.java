@@ -28,7 +28,7 @@ public class HandTest {
 
         testHand.addCardToHand(testCard);
         testHand.addCardToHand(testCard);
-        testHand.removeCardFromHand(testCard);
+        testHand.removeCardFromHand(Suit.CLUB, Face.EIGHT);
         int expected = 1;
         int actual = testHand.getNumOfCards();
         Assert.assertEquals(expected,actual);

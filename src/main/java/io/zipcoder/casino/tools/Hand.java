@@ -4,30 +4,41 @@ import java.util.ArrayList;
 
 public abstract class Hand {
 
-    public ArrayList<Card> hand;
-    int numberOfCardsInHand = 0;
+    private ArrayList<Card> cardsOnHand;
+    private Integer numberOfCardsInHand = 0;
 
     public Hand(){
-        this.hand= new ArrayList<Card>();
+        this.cardsOnHand= new ArrayList<>();
     }
 
     public void addCardToHand(Card cardToAdd){
-        hand.add(cardToAdd);
+        cardsOnHand.add(cardToAdd);
     }
 
-    public void removeCardFromHand(Card cardToRemove){
-        hand.remove(cardToRemove);
+    public void removeCardFromHand(Suit s, Face f){
+        int i = 0;
+        for(Card c :cardsOnHand){
+            if(c.getFace()==f && c.getSuit()==s){
+                cardsOnHand.remove(i);
+            }
+            i++;
+        }
     }
+
 
     public void displayHands(){
-
-        System.out.println(hand);
-
+        for (Card c :cardsOnHand) {
+            System.out.println(c.toString());
+        }
     }
 
     public int getNumOfCards(){
-        numberOfCardsInHand = hand.size();
+        numberOfCardsInHand = cardsOnHand.size();
 
         return numberOfCardsInHand;
+    }
+
+    public ArrayList<Card> getCardsOnHand() {
+        return cardsOnHand;
     }
 }
