@@ -76,7 +76,8 @@ public class GoFishHandTest {
         hand1.giveCardsTo(Face.FOUR,hand2);
 
         Assert.assertEquals(4, hand2.getNumOfCards());
-
+        Assert.assertEquals(3, hand1.getNumOfCards());
+        hand1.displayHands();
     }
 
     @Test

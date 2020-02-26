@@ -1,11 +1,11 @@
 package io.zipcoder.casino.tools;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public abstract class Hand {
 
     private ArrayList<Card> cardsOnHand;
-    private Integer numberOfCardsInHand = 0;
 
     public Hand(){
         this.cardsOnHand= new ArrayList<>();
@@ -15,14 +15,19 @@ public abstract class Hand {
         cardsOnHand.add(cardToAdd);
     }
 
-    public void removeCardFromHand(Suit s, Face f){
-        int i = 0;
-        for(Card c :cardsOnHand){
-            if(c.getFace()==f && c.getSuit()==s){
-                cardsOnHand.remove(i);
+    public void discardCardsFromHand(Suit s, Face f){
+        cardsOnHand.removeIf((card)->card.getFace()==f && card.getSuit()==s);
+    }
+
+    public Card removeCard(Suit s, Face f){
+        for(Iterator<Card> i = cardsOnHand.iterator();i.hasNext();){
+            Card currCard = i.next();
+            if(currCard.getSuit()==s && currCard.getFace()==f){
+                i.remove();
+                return currCard;
             }
-            i++;
         }
+        return null;
     }
 
 
@@ -33,9 +38,7 @@ public abstract class Hand {
     }
 
     public int getNumOfCards(){
-        numberOfCardsInHand = cardsOnHand.size();
-
-        return numberOfCardsInHand;
+        return cardsOnHand.size();
     }
 
     public ArrayList<Card> getCardsOnHand() {
