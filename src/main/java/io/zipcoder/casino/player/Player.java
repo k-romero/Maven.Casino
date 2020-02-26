@@ -39,6 +39,8 @@ public class Player {
         this.playerFunds = playerFunds;
     }
 
+    public void addPlayerFunds(int amountWantsToAdd){ this.playerFunds += amountWantsToAdd; }
+
     public boolean isDrunk() {
         if(this.drinks > 3){
             this.isDrunk = true;
