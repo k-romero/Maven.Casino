@@ -6,16 +6,17 @@ import io.zipcoder.casino.tools.Dice;
 
 public class HighRollerPlayer implements GamblingPlayer {
 
-    Integer value;
+    Integer diceValue;
     Dice dice;
     Player player1;
 
     public HighRollerPlayer(Player p1) {
         Dice myDice = new Dice(2);
-        this.value = value;
+        this.diceValue = 0;
         this.dice = myDice;
         this.player1 = p1;
     }
+
 
     public String getName() {
         return player1.getName();
@@ -38,5 +39,15 @@ public class HighRollerPlayer implements GamblingPlayer {
 
     public Integer getNumberOfWins() {
         return 0;
+    }
+
+    public Integer rollDice() {
+        this.diceValue = dice.tossAndSum();
+        return diceValue;
+
+    }
+
+    public Integer getDiceValue() {
+        return diceValue;
     }
 }
