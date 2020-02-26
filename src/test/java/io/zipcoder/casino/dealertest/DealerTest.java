@@ -7,7 +7,7 @@ import org.junit.Test;
 public class DealerTest {
     @Test
     public void  getName(){
-        DiceDealer diceDealer = new DiceDealer();
+        DiceDealer diceDealer = new DiceDealer(2);
         diceDealer.setName("kasper");
         String actual = diceDealer.getName();
         Assert.assertEquals("kasper",actual);
@@ -16,14 +16,14 @@ public class DealerTest {
 
     @Test
     public void setName(){
-        DiceDealer diceDealer = new DiceDealer();
+        DiceDealer diceDealer = new DiceDealer(2);
         diceDealer.setName("kasper");
 
         Assert.assertEquals("kasper",diceDealer.getName() );
     }
     @Test
     public void isAngry(){
-        DiceDealer diceDealer = new DiceDealer();
+        DiceDealer diceDealer = new DiceDealer(2);
         diceDealer.setAngry(Boolean.TRUE);
         Assert.assertTrue(diceDealer.getAngry());
     }
