@@ -15,10 +15,12 @@ public abstract class Hand {
         cardsOnHand.add(cardToAdd);
     }
 
+    //this will discard any card with given suit and face
     public void discardCardsFromHand(Suit s, Face f){
         cardsOnHand.removeIf((card)->card.getFace()==f && card.getSuit()==s);
     }
 
+    //this remove will actually return the information of the card that is removed
     public Card removeCard(Suit s, Face f){
         for(Iterator<Card> i = cardsOnHand.iterator();i.hasNext();){
             Card currCard = i.next();
