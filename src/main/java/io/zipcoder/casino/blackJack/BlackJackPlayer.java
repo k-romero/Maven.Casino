@@ -20,8 +20,9 @@ public class BlackJackPlayer implements GamblingPlayer {
     public void placeBet(int value){
         player.reducePlayerFunds(value);
     }
+
     public void payOut(int valueWon){
-        player.addPlayerFunds(+valueWon);
+        player.addPlayerFunds(valueWon);
     }
 
     public Integer getRanking() {
