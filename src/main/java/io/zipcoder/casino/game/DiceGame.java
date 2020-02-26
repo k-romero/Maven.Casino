@@ -1,4 +1,4 @@
 package io.zipcoder.casino.game;
 
-public class DiceGame {
+public abstract class DiceGame {
 }

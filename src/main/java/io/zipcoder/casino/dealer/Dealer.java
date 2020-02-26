@@ -20,7 +20,4 @@ public abstract class Dealer {
         isAngry = angry;
     }
 
-
-
-
 }
