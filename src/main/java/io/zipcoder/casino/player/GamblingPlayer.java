@@ -4,4 +4,6 @@ public interface GamblingPlayer {
     int getRanking();
     int getNumberOfWins();
 
+
+
 }
