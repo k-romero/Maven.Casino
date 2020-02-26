@@ -39,11 +39,13 @@ public class HandTest {
         testHand.addCardToHand(new Card(Suit.CLUB, Face.EIGHT));
         testHand.addCardToHand(new Card(Suit.CLUB, Face.NINE));
 
-        testHand.removeCard(Suit.CLUB, Face.EIGHT);
+        Card c = testHand.removeCard(Suit.CLUB, Face.EIGHT);
         int expected = 1;
         int actual = testHand.getNumOfCards();
         Assert.assertEquals(expected,actual);
         Assert.assertEquals(1,testHand.getNumOfCards());
+        Assert.assertEquals(8,c.getFace().getValue());
+        Assert.assertEquals("Club",c.getSuit().getSuitName());
         testHand.displayHands();
     }
     @Test
