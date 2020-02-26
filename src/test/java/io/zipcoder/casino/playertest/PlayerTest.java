@@ -126,6 +126,22 @@ public class PlayerTest {
         Assert.assertEquals(expected,actual);
     }
 
+    @Test
+    public void reducePlayerFundsTest(){
+        int id = 1000;
+        String name = "Player Test";
+        int playerFunds = 200;
+        boolean isDrunk = true;
+
+        Player playerTest = new Player(id,name,playerFunds,isDrunk);
+
+        playerTest.reducePlayerFunds(10);
+        int expected = 190;
+        int actual = playerTest.getPlayerFunds();
+
+        Assert.assertEquals(expected,actual);
+    }
+
 
     @Test
     public void checkDrunkTest(){
