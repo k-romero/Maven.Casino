@@ -7,3 +7,4 @@ public interface GamblingPlayer {
     Integer getRanking();
     Integer getNumberOfWins();
 }
+

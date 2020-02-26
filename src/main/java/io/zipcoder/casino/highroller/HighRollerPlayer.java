@@ -33,6 +33,7 @@ public class HighRollerPlayer implements GamblingPlayer {
     public void placeBet(int value){
         player1.reducePlayerFunds(value);
     }
+
     public void payOut(int valueWon){
         player1.addPlayerFunds(+valueWon);
     }
