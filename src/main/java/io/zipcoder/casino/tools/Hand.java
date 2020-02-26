@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public abstract class Hand {
 
-    public ArrayList<Card> cardsOnHand;
-    int numberOfCardsInHand = 0;
+    private ArrayList<Card> cardsOnHand;
+    private Integer numberOfCardsInHand = 0;
 
     public Hand(){
         this.cardsOnHand= new ArrayList<>();
@@ -15,9 +15,16 @@ public abstract class Hand {
         cardsOnHand.add(cardToAdd);
     }
 
-    public void removeCardFromHand(Card cardToRemove){
-        cardsOnHand.remove(cardToRemove);
+    public void removeCardFromHand(Suit s, Face f){
+        int i = 0;
+        for(Card c :cardsOnHand){
+            if(c.getFace()==f && c.getSuit()==s){
+                cardsOnHand.remove(i);
+            }
+            i++;
+        }
     }
+
 
     public void displayHands(){
         for (Card c :cardsOnHand) {
@@ -29,5 +36,9 @@ public abstract class Hand {
         numberOfCardsInHand = cardsOnHand.size();
 
         return numberOfCardsInHand;
+    }
+
+    public ArrayList<Card> getCardsOnHand() {
+        return cardsOnHand;
     }
 }
