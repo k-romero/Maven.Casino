@@ -17,8 +17,25 @@ public class HighRollerPlayer implements GamblingPlayer {
         this.player1 = p1;
     }
 
+    public Integer rollDice() {
+        this.diceValue = dice.tossAndSum();
+        return diceValue;
+    }
+
+    public Integer getDiceValue() {
+        return diceValue;
+    }
+
     public Player getPlayerData() {
         return player1;
+    }
+
+    public void placeBet(int value){
+        player1.reducePlayerFunds(value);
+    }
+
+    public void payOut(int valueWon){
+        player1.addPlayerFunds(+valueWon);
     }
 
     public Integer getRanking() {
@@ -27,14 +44,5 @@ public class HighRollerPlayer implements GamblingPlayer {
 
     public Integer getNumberOfWins() {
         return 0;
-    }
-
-    public Integer rollDice() {
-        this.diceValue = dice.tossAndSum();
-        return diceValue;
-    }
-
-    public Integer getDiceValue() {
-        return diceValue;
     }
 }

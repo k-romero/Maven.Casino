@@ -17,14 +17,5 @@ public class HighRoller implements GameControl, GamblingGame {
 
     }
 
-    public void placeBet(Player p1, int amount) {
-        player1Bet = amount;
-
-
-    }
-
-    public void payout(Player p1, int amount) {
-
-    }
 
 }

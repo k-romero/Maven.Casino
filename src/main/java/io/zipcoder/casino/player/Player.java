@@ -41,6 +41,8 @@ public class Player {
 
     public void addPlayerFunds(int amountWantsToAdd){ this.playerFunds += amountWantsToAdd; }
 
+    public void reducePlayerFunds(int amountWantsToReduce){ this.playerFunds -= amountWantsToReduce; }
+
     public boolean isDrunk() {
         if(this.drinks > 3){
             this.isDrunk = true;
