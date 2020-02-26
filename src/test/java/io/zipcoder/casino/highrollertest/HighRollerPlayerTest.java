@@ -15,7 +15,7 @@ public class HighRollerPlayerTest {
         Player player = new Player(1234, "Jack", 1000, true );
         HighRollerPlayer highRollerPlayer = new HighRollerPlayer(player);
         String playerName = "Jack";
-        Assert.assertEquals( playerName, highRollerPlayer.getName());
+        Assert.assertEquals( playerName, highRollerPlayer.getPlayerData().getName());
     }
 
     @Test
@@ -24,7 +24,7 @@ public class HighRollerPlayerTest {
         Player player = new Player(1234, "Jack", 1000, true );
         HighRollerPlayer highRollerPlayer = new HighRollerPlayer(player);
         Integer expectedFund = 1000;
-        Integer getFund = highRollerPlayer.getFund();
+        Integer getFund = highRollerPlayer.getPlayerData().getPlayerFunds();
         Assert.assertEquals( expectedFund, getFund);
     }
 
@@ -34,8 +34,8 @@ public class HighRollerPlayerTest {
         Player player = new Player(1234, "Jack", 1000, true );
         HighRollerPlayer highRollerPlayer = new HighRollerPlayer(player);
         Integer expectedFund = 1500;
-        highRollerPlayer.addFund(500);
-        Integer updatedFund = highRollerPlayer.getFund();
+        highRollerPlayer.getPlayerData().addPlayerFunds(500);
+        Integer updatedFund = highRollerPlayer.getPlayerData().getPlayerFunds();
         Assert.assertEquals( expectedFund, updatedFund);
     }
     @Test
