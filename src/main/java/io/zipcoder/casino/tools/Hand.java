@@ -4,29 +4,29 @@ import java.util.ArrayList;
 
 public abstract class Hand {
 
-    public ArrayList<Card> hand;
+    public ArrayList<Card> cardsOnHand;
     int numberOfCardsInHand = 0;
 
     public Hand(){
-        this.hand= new ArrayList<Card>();
+        this.cardsOnHand= new ArrayList<>();
     }
 
     public void addCardToHand(Card cardToAdd){
-        hand.add(cardToAdd);
+        cardsOnHand.add(cardToAdd);
     }
 
     public void removeCardFromHand(Card cardToRemove){
-        hand.remove(cardToRemove);
+        cardsOnHand.remove(cardToRemove);
     }
 
     public void displayHands(){
-
-        System.out.println(hand);
-
+        for (Card c :cardsOnHand) {
+            System.out.println(c.toString());
+        }
     }
 
     public int getNumOfCards(){
-        numberOfCardsInHand = hand.size();
+        numberOfCardsInHand = cardsOnHand.size();
 
         return numberOfCardsInHand;
     }
