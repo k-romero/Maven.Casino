@@ -9,16 +9,13 @@ import java.util.ArrayList;
 
 public class BlackJackHand extends Hand {
 
-    public ArrayList<Card> cards;
-
     public BlackJackHand() {
-        this.cards = new ArrayList<>();
+        super.hand = new ArrayList<>();
     }
-
 
     public Integer getSumOfHand(boolean aceIs11){
         int sum = 0;
-        for(Card c: cards){
+        for(Card c: super.hand){
             if(c.getFace().getValue() > 10){
                 sum += 10;
             } else if(c.getFace() == Face.ACE && aceIs11) {
@@ -31,8 +28,5 @@ public class BlackJackHand extends Hand {
 
         return sum;
     }
-
-
-
 
 }

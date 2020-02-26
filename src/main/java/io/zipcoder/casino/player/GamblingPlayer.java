@@ -4,7 +4,5 @@ public interface GamblingPlayer {
     Player getPlayerData();
     Integer getRanking();
     Integer getNumberOfWins();
-    Integer getFund();
-    void addFund(int newFund);
 
 }
