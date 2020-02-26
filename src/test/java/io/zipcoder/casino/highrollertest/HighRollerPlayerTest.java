@@ -5,6 +5,8 @@ import io.zipcoder.casino.player.Player;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.sql.SQLOutput;
+
 public class HighRollerPlayerTest {
 
     @Test
@@ -36,4 +38,27 @@ public class HighRollerPlayerTest {
         Integer updatedFund = highRollerPlayer.getFund();
         Assert.assertEquals( expectedFund, updatedFund);
     }
+    @Test
+    public void checkRollValueDiceTest() {
+        //Given
+        Player player = new Player(1234, "Jack", 1000, true );
+        HighRollerPlayer highRollerPlayer = new HighRollerPlayer(player);
+        // expected
+
+        Integer output = highRollerPlayer.rollDice();
+        Assert.assertTrue(output >= 2 && output <= 12 );
+    }
+    @Test
+    public void checkLastDiceValueTest() {
+        //Given
+        Player corey = new Player(1234, "Jack", 1000, true );
+        HighRollerPlayer coreyHighRoller = new HighRollerPlayer(corey);
+        // expected
+
+        Integer expected = coreyHighRoller.rollDice();
+       // coreyHighRoller.rollDice();
+        Integer actual = coreyHighRoller.getDiceValue();
+        Assert.assertEquals(expected,actual);
+    }
+
 }
