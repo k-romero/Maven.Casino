@@ -61,4 +61,15 @@ public class HighRollerPlayerTest {
         Assert.assertEquals(expected,actual);
     }
 
+    @Test
+    public void playerDataTest() {
+        //Given
+        Player player = new Player(1234, "Jack", 1000, true );
+        HighRollerPlayer highRollerPlayer = new HighRollerPlayer(player);
+
+        // expected
+        String name = highRollerPlayer.getPlayerData().getName();
+        Assert.assertEquals("Jack",name);
+
+    }
 }
