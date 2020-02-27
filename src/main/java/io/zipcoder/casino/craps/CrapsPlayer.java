@@ -1,5 +1,9 @@
 package io.zipcoder.casino.craps;
 
+import io.zipcoder.casino.player.GamblingPlayer;
+import io.zipcoder.casino.player.Player;
+import io.zipcoder.casino.tools.Dice;
+
 public class CrapsPlayer implements GamblingPlayer {
 
     Integer diceValue;
@@ -20,14 +24,14 @@ public class CrapsPlayer implements GamblingPlayer {
 
     public Integer getDiceValue() { return diceValue; }
 
-    public Player getPlayerData { eturn player1; }
+    public Player getPlayerData(){return player1; }
 
-    public void placeBet(int value){ player1.reducePlayer(value); }
+    public void placeBet(int value){ player1.reducePlayerFunds(value); }
 
     public void payOut(int valueWon) { player1.addPlayerFunds(valueWon); }
 
     public Integer getRanking() { return 0; }
 
-    public Integer getNumberOfWins { return 0; }
+    public Integer getNumberOfWins(){ return 0; }
 
 }
