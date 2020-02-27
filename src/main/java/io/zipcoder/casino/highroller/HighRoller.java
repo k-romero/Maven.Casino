@@ -40,11 +40,15 @@ public class HighRoller extends DiceGame implements GamblingGame{
             } else if(playerCurrentlyPlayingTheGame.getDiceValue() > displayDealerRoll()){
                 console.println("You win! " + (player1Bet * 2) + " has been added to your account!");
                 playerCurrentlyPlayingTheGame.payOut(player1Bet * 2);
-                ;
             } else {
                 console.println("You lost " + player1Bet + "! Better luck next time :(");
             }
-            this.gameInSession = continueGameOrEnd();
+            if(currentPlayer.getPlayerData().getPlayerFunds() == 0){
+                console.println("SECURITY! Get this guy out of here!");
+                this.gameInSession = false;
+            }else {
+                this.gameInSession = continueGameOrEnd();
+            }
         }
 
     }
