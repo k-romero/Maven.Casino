@@ -1,12 +1,12 @@
 package io.zipcoder.casino.highroller;
 import io.zipcoder.casino.dealer.DiceDealer;
+import io.zipcoder.casino.game.DiceGame;
 import io.zipcoder.casino.game.GamblingGame;
-import io.zipcoder.casino.game.GameControl;
 import io.zipcoder.casino.player.Player;
 import io.zipcoder.casino.utilities.Console;
 
 
-public class HighRoller implements GameControl, GamblingGame {
+public class HighRoller extends DiceGame implements GamblingGame{
 
     Integer player1Bet = 0;
     HighRollerPlayer currentPlayer;
