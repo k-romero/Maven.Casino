@@ -35,7 +35,7 @@ public class HighRollerPlayer implements GamblingPlayer {
     }
 
     public void payOut(int valueWon){
-        player1.addPlayerFunds(+valueWon);
+        player1.addPlayerFunds(valueWon);
     }
 
     public Integer getRanking() {
