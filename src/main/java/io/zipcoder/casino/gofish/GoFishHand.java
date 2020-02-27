@@ -2,7 +2,6 @@ package io.zipcoder.casino.gofish;
 import io.zipcoder.casino.tools.Card;
 import io.zipcoder.casino.tools.Face;
 import io.zipcoder.casino.tools.Hand;
-import io.zipcoder.casino.tools.Suit;
 
 import java.util.ArrayList;
 import java.util.Comparator;

@@ -1,11 +1,8 @@
-package io.zipcoder.casino.blackJack;
+package io.zipcoder.casino.blackjack;
 
 import io.zipcoder.casino.tools.Card;
 import io.zipcoder.casino.tools.Face;
 import io.zipcoder.casino.tools.Hand;
-
-
-import java.util.ArrayList;
 
 public class BlackJackHand extends Hand {
 

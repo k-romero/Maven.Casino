@@ -4,9 +4,12 @@ import io.zipcoder.casino.tools.Deck;
 import io.zipcoder.casino.tools.Hand;
 
 public abstract class CardGame extends Game {
-    public static void deal(Deck aDeck, Hand aHand){
-        Card someCard = aDeck.peek();
-        aDeck.remove();
-        aHand.addCardToHand(someCard);
+    public static Card deal(Deck aDeck, Hand aHand){
+        Card dealtCard = aDeck.takeCard();
+
+        if(dealtCard != null)
+            aHand.addCardToHand(dealtCard);
+
+        return dealtCard;
     }
 }

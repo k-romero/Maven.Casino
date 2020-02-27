@@ -1,15 +1,12 @@
-package io.zipcoder.casino.blackJack;
+package io.zipcoder.casino.blackjack;
 
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import io.zipcoder.casino.game.CardGame;
 import io.zipcoder.casino.game.GamblingGame;
-import io.zipcoder.casino.game.GameControl;
-import io.zipcoder.casino.player.GamblingPlayer;
 import io.zipcoder.casino.player.Player;
 import io.zipcoder.casino.tools.Deck;
 import io.zipcoder.casino.utilities.Console;
 
-public class BlackJack extends CardGame implements GamblingGame, GameControl {
+public class BlackJack extends CardGame implements GamblingGame{
     Integer placeBet=0;
     BlackJackPlayer blackJackPlayer;
     Deck deck;
