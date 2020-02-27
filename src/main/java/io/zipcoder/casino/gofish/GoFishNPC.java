@@ -12,6 +12,11 @@ public class GoFishNPC extends GoFishPlayer {
     }
 
     @Override
+    public void showUserTheHand(){
+
+    }
+
+    @Override
     public GoFishPlayer promptForPlayer(ArrayList<GoFishPlayer> players){
         GoFishPlayer randPlayer;
         //regenerate if the random player is self
