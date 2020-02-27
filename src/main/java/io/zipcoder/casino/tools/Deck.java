@@ -33,6 +33,11 @@ public class Deck {
     public Stack getDeck(){
         return deck;
     }
+    public  Card takeCard (){
+       Card card= peek();
+        remove();
+        return card;
+    }
 
     @Override
     public String toString(){
