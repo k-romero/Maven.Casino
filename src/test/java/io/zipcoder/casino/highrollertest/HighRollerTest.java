@@ -33,6 +33,12 @@ public class HighRollerTest {
         Assert.assertNotEquals(beforeRoll,afterRoll);
     }
 
+    @Test
+    public void checkArt(){
+        HighRoller game = new HighRoller();
+        System.out.println(game.highRollerImage());
+    }
+
 
 
 
