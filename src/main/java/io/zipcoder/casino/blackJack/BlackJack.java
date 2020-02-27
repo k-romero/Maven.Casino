@@ -28,7 +28,6 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
     }
 
 
-
     @Override
     public void start(Player player) {
         startBlackJack();
@@ -67,7 +66,8 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
                     startBlackJack();
                 } else
                     break;
-            }}
+            }
+        }
         playDealerHand(dealerHand);
 
 
@@ -153,14 +153,14 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
 
 
 
-    @Override
-    public void end(Player p1) {
+        @Override
+        public void end(Player p1) {
 
 
-    }
+        }
 
 
-/*    public  void Stand(BlackJackHand playerHand){
+    /*   public  void Stand(BlackJackHand playerHand){
         return playerHand.getSumOfHand()
     }*/
 
