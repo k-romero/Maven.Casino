@@ -11,6 +11,7 @@ public class BlackJackHand extends Hand {
 
     public BlackJackHand() {
         //super.cardsOnHand = new ArrayList<>();
+
     }
 
     public Integer getSumOfHand(boolean aceIs11){
