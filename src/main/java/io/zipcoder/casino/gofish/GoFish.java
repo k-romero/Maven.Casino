@@ -12,7 +12,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GoFish extends CardGame implements GamblingGame {
 
-    private int numOfNPC = 1;
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+        private int numOfNPC = 1;
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
     ArrayList<GoFishPlayer> players = new ArrayList<>();
     Deck mainDeck = new Deck();
 
@@ -45,7 +48,7 @@ public class GoFish extends CardGame implements GamblingGame {
         int currentIndex = ThreadLocalRandom.current().nextInt(0,numOfNPC+1);
         GoFishPlayer currentPlayer = players.get(currentIndex);
 
-        while(mainDeck.checkSize()!=0 && turn(currentPlayer)){
+        while(mainDeck.checkSize()!=0 && continueTurn(currentPlayer)){
             currentPlayer = getNextPlayer(currentPlayer);
         }
         /*
@@ -71,7 +74,7 @@ public class GoFish extends CardGame implements GamblingGame {
 
     }
 
-    public Boolean turn(GoFishPlayer currentP){
+    public Boolean continueTurn(GoFishPlayer currentP){
         Face face = check4(currentP.getGoFishHand());
 
         if(face != null){//match found!!!!!
@@ -87,12 +90,12 @@ public class GoFish extends CardGame implements GamblingGame {
 
         //if(ask success)
         if(currentP.askFor(askedPlayer, face, mainDeck)){
-            turn(currentP);
+            continueTurn(currentP);
         }else{
             //r says go fish
             Card fish = deal(mainDeck, currentP.getGoFishHand());
             if(fish.getFace().equals(face)){
-                turn(currentP);
+                continueTurn(currentP);
             }
         }
         return true;
@@ -116,16 +119,9 @@ public class GoFish extends CardGame implements GamblingGame {
     }
 
 
-
-
-
     @Override
     public void end(Player p1) {
-
     }
-
-
-
 
 
 }
