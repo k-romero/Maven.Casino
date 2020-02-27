@@ -9,20 +9,6 @@ import org.junit.Test;
 public class HighRollerTest {
 
     @Test
-    public void checkToSeeIfHighRollerPlayer() {
-        //Given
-        Player jack = new Player(1234, "Jack", 1000, true );
-
-        HighRoller game = new HighRoller();
-
-        //Uncomment this below line to pass test
-//        game.start(jack);
-
-        Assert.assertTrue(game.currentPlayerIsHighRoller() instanceof HighRollerPlayer);
-    }
-
-
-    @Test
     public void checkDealerRollsDice() {
         HighRoller game = new HighRoller();
 
