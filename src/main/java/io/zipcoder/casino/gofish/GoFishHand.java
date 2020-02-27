@@ -2,6 +2,7 @@ package io.zipcoder.casino.gofish;
 import io.zipcoder.casino.tools.Card;
 import io.zipcoder.casino.tools.Face;
 import io.zipcoder.casino.tools.Hand;
+import io.zipcoder.casino.tools.Suit;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -12,7 +13,6 @@ public class GoFishHand extends Hand{
     private Integer tallyMatches = 0;
 
     public GoFishHand(){
-        //super.cardsOnHand = new ArrayList<>();
     }
 
     public Integer getTallyMatches() {
@@ -58,8 +58,12 @@ public class GoFishHand extends Hand{
                 anotherHand.addCardToHand(c);
             }
         }
+        discardCardsWith(theFace);
     }
 
+    public void discardCardsWith(Face f){
+        super.getCardsOnHand().removeIf((card)->card.getFace()==f);
+    }
 
     public void increaseTally(){
         tallyMatches++;
