@@ -1,4 +1,9 @@
 package io.zipcoder.casino.crapstest;
+import io.zipcoder.casino.highroller.CrapsPlayer;
+import io.zipcoder.casino.player.Player;
+import org.junit.Assert;
+import org.junit.Test;
+
 
 public class CrapsPlayer {
 
