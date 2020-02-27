@@ -1,6 +1,13 @@
 package io.zipcoder.casino.craps;
 
-public class Craps extends DiceGame implements GamblingGame{
+import io.zipcoder.casino.game.DiceGame;
+import io.zipcoder.casino.game.GamblingGame;
+import io.zipcoder.casino.player.Player;
+import io.zipcoder.casino.utilities.Console;
+
+import java.util.HashMap;
+
+public class Craps extends DiceGame implements GamblingGame {
 
     Integer player1Bet = 0;
     CrapsPlayer currentPlayer;
@@ -16,6 +23,11 @@ public class Craps extends DiceGame implements GamblingGame{
 
 
 
+
+    }
+
+    @Override
+    public void end(Player p1) {
 
     }
 
