@@ -23,7 +23,7 @@ public class HighRoller extends DiceGame implements GamblingGame{
         this.currentPlayer = playerCurrentlyPlayingTheGame;
 
         gameInSession = true;
-
+        console.println(highRollerImage());
         while(gameInSession){
             console.println("HighRoller coming in!");
             bet();
@@ -95,6 +95,18 @@ public class HighRoller extends DiceGame implements GamblingGame{
             continueGameOrEnd();
         }
         return decision;
+    }
+
+    public String highRollerImage(){
+        String result = "       .-------.    ______\n" +
+                "      /   o   /|   /\\     \\\n" +
+                "     /_______/o|  /o \\  o  \\\n" +
+                "     | o     | | /   o\\_____\\\n" +
+                "     |   o   |o/ \\o   /o    /\n" +
+                "     |     o |/   \\ o/  o  /\n" +
+                "     '-------'     \\/____o/";
+
+        return result;
     }
 
 
