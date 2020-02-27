@@ -20,5 +20,12 @@ public class Card {
     public String toString() {
         return (face.getFaceString() + " " + suit.getSuitName());
     }
+
+
+    public String toString(boolean b) {
+        return (face.getFaceString() + " " + suit.getSuitSymbol());
+    }
+
+
 }
 

@@ -4,6 +4,7 @@ import io.zipcoder.casino.player.Player;
 import io.zipcoder.casino.tools.Face;
 import io.zipcoder.casino.utilities.Console;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 
@@ -24,8 +25,11 @@ public class GoFishPlayer implements GamblingPlayer {
 
     public Boolean askFor(GoFishPlayer they, Face f){
         if(they.getGoFishHand().doesMyHandHave(f)){
-            console.print(they.getPlayerData().getName()+" has "+ they.getGoFishHand().howManyDoIHave(f)+" "+f.getFaceString()+".");
+            console.println("Apparently "+they.getPlayerData().getName()+" has some "+f.getFaceString()+".");
+            //they.getGoFishHand().displayHands();
+            console.println("So "+ they.getPlayerData().getName()+" handed over "+ they.getGoFishHand().howManyDoIHave(f)+" cards to "+this.getPlayerData().getName());
             they.getGoFishHand().giveCardsTo(f, myHand);
+            GoFish.promptForNextOrEnd(console);
             return true;
         }
         return false;
@@ -53,18 +57,21 @@ public class GoFishPlayer implements GamblingPlayer {
 
     public void showUserTheHand(){
         console.println("Cards on your hand are: ");
-        this.getGoFishHand().displayHands();
+        this.getGoFishHand().displayHandsWithSymbol();
     }
 
     public GoFishPlayer promptForPlayer(ArrayList<GoFishPlayer> players){
         int index;
+        if(players.size() == 2){
+            return players.get(1);
+        }
         while(true) {
             console.println("[ Please select a player to ask ]");
             for(int i=1; i<players.size(); i++){
-                console.println( " > ("+ i +") " + players.get(i).getPlayerData().getName() );
+                console.println( " > ("+ i +") " + players.get(i) );
             }
             try {
-                index = console.getIntegerInput("I will select: ");
+                index = console.getIntegerInputWithoutln("I will select: ");
                 if(index>players.size()){
                     throw new InputMismatchException();
                 }
@@ -94,7 +101,7 @@ public class GoFishPlayer implements GamblingPlayer {
                 console.println( " > ("+ i +") "+ fs.get(i).getFaceString() );
             }
             try {
-                val = console.getIntegerInput("I will select: ");
+                val = console.getIntegerInputWithoutln("I will select: ");
                 if(val>fs.size()){
                     throw new InputMismatchException();
                 }
@@ -106,5 +113,9 @@ public class GoFishPlayer implements GamblingPlayer {
         return fs.get(val);
     }
 
+    @Override
+    public String toString(){
+        return this.getPlayerData().getName();
+    }
 
 }
