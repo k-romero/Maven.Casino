@@ -1,15 +1,11 @@
 package io.zipcoder.casino.blackjacktest;
 
-import io.zipcoder.casino.blackJack.BlackJackHand;
-import io.zipcoder.casino.blackJack.BlackJackPlayer;
+import io.zipcoder.casino.blackjack.BlackJackHand;
 import io.zipcoder.casino.tools.Card;
 import io.zipcoder.casino.tools.Face;
-import io.zipcoder.casino.tools.Hand;
 import io.zipcoder.casino.tools.Suit;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.ArrayList;
 
 public class BlackJackHandTest {
 

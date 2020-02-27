@@ -8,24 +8,22 @@ import io.zipcoder.casino.tools.Suit;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Stack;
-
 public class DeckTest {
 
     @Test
     public void peekTest(){
         Deck deck = new Deck();
         Card expected = new Card(Suit.DIAMOND, Face.KING);
-        Card actual = deck.peek();
+        Card actual = deck.peekDeck();
         Assert.assertEquals(expected.toString(),actual.toString());
     }
 
     @Test
     public void removeTest(){
         Deck deck = new Deck();
-        deck.remove();
+        deck.popACard();
         Card expected = new Card(Suit.DIAMOND, Face.QUEEN);
-        Card actual = deck.peek();
+        Card actual = deck.peekDeck();
         Assert.assertEquals(expected.toString(),actual.toString());
     }
 
@@ -33,7 +31,7 @@ public class DeckTest {
     public void shuffleTest(){
         Deck deck = new Deck();
         String expected = deck.toString();
-        deck.shuffle();
+        deck.shuffleDeck();
         String actual = deck.toString();
         Assert.assertNotEquals(expected,actual);
     }
@@ -42,9 +40,9 @@ public class DeckTest {
     public void getCheckSize(){
         Deck deck = new Deck();
         int actual = deck.checkSize() - 3;
-        deck.remove();
-        deck.remove();
-        deck.remove();
+        deck.popACard();
+        deck.popACard();
+        deck.popACard();
         int expected = deck.checkSize();
         Assert.assertEquals(expected,actual);
 

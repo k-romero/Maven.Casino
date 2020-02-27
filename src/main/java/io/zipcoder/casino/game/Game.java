@@ -2,7 +2,7 @@ package io.zipcoder.casino.game;
 
 import io.zipcoder.casino.player.Player;
 
-public abstract class Game  {
+public abstract class Game implements GameControl{
     Player player;
     Player house;
     int playBet;
