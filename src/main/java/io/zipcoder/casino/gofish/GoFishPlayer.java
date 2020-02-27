@@ -1,14 +1,12 @@
 package io.zipcoder.casino.gofish;
 import io.zipcoder.casino.player.GamblingPlayer;
 import io.zipcoder.casino.player.Player;
-import io.zipcoder.casino.tools.Deck;
 import io.zipcoder.casino.tools.Face;
 import io.zipcoder.casino.utilities.Console;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 
-import static io.zipcoder.casino.game.CardGame.deal;
 
 public class GoFishPlayer implements GamblingPlayer {
     private GoFishHand myHand;
@@ -54,7 +52,7 @@ public class GoFishPlayer implements GamblingPlayer {
     }
 
     public void showUserTheHand(){
-        console.print("Cards on your hand are: ");
+        console.println("Cards on your hand are: ");
         this.getGoFishHand().displayHands();
     }
 

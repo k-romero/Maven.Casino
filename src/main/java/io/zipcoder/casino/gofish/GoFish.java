@@ -21,7 +21,7 @@ public class GoFish extends CardGame implements GamblingGame {
     @Override
     public void start(Player p1) {
         console.println("Welcome to Gofish");
-        Integer numOfNPC = promptForNumber("Please Enter number of players: ");
+        Integer numOfNPC = promptForNumber("Please enter number of NPCs: ");
         console.println(p1.getName()+" and "+numOfNPC+" others are playing.");
         promptForNextOrEnd();
 
@@ -37,11 +37,12 @@ public class GoFish extends CardGame implements GamblingGame {
 
         //initial deal
         int startingCardNum = 7;
-        if(numOfNPC>2)
+
+        if(numOfNPC>1)
             startingCardNum = 5;
 
-        for(int i=0; i<startingCardNum; i++) {
-            for(int j=0; j<1+numOfNPC; j++)
+        for(int i=0; i<1+numOfNPC; i++) {
+            for(int j=0; j<startingCardNum; j++)
                 deal(mainDeck, players.get(i).getGoFishHand());
         }
 
@@ -134,7 +135,7 @@ public class GoFish extends CardGame implements GamblingGame {
     public void showEveryoneNumOfCard(){
         console.println("=====Current number of cards=====");
         for(GoFishPlayer gp :players){
-            console.println(gp.getPlayerData().getName()+" has "+gp.getGoFishHand().getNumOfCards()+ "cards.");
+            console.println(gp.getPlayerData().getName()+" has "+gp.getGoFishHand().getNumOfCards()+ " cards.");
         }
         console.println("=================================");
 
@@ -143,7 +144,7 @@ public class GoFish extends CardGame implements GamblingGame {
     public Integer promptForNumber(String msg){
         while(true) {
             try {
-                return console.getIntegerInput(msg);
+                return console.getIntegerInputWithoutln(msg);
             }catch (Exception e){
                 console.println("Invalid Input! Please try again.");
             }
@@ -153,7 +154,7 @@ public class GoFish extends CardGame implements GamblingGame {
     public String promptForNextOrEnd(){
         while(true) {
             try {
-                return console.getStringInput("///////Press Enter to continue or say BYE to abort.///////");
+                return console.getStringInputWithoutln("///////Press Enter to continue or say BYE to abort.///////");
             }catch (Exception e){
                 console.println("Something went wrong! Please try again.");
             }
