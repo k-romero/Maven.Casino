@@ -11,13 +11,14 @@ public class BlackJackHand extends Hand {
 
     }
 
-    public Integer getSumOfHand(boolean aceIs11){
+   /* public Integer sumOfHand(Hand hand){
+
         int sum = 0;
         for(Card c: super.getCardsOnHand()){
             if(c.getFace().getValue() > 10){
                 sum += 10;
-            } else if(c.getFace() == Face.ACE && aceIs11) {
-                sum += 11;
+            } else if(c.getFace() == Face.ACE && sum < 21 ) {
+                sum += c.getFace().getAltValue();
             }
             else {
                 sum += c.getFace().getValue();
@@ -25,21 +26,19 @@ public class BlackJackHand extends Hand {
         }
 
         return sum;
-    }
+    }*/
+
 
     public int  calculateCards (Hand hand){
         Integer sum=0;
         for( Card c : super.getCardsOnHand()){
             if(c.getFace().getValue() > 10){
-                sum += 10;} else
-
+                sum += 10;}
+            else
                 sum+= c.getFace().getValue();
-
-
-
         }
         return sum;
-}
+    }
 
 
 

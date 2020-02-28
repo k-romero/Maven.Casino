@@ -24,6 +24,7 @@ public class HighRoller extends DiceGame implements GamblingGame{
 
         gameInSession = true;
         console.println(highRollerImage());
+        console.println(highRollerText());
         while(gameInSession){
             console.println("HighRoller coming in!");
             bet();
@@ -110,6 +111,16 @@ public class HighRoller extends DiceGame implements GamblingGame{
                 "     |     o |/   \\ o/  o  /\n" +
                 "     '-------'     \\/____o/";
 
+        return result;
+    }
+
+    public String highRollerText(){
+        String result = "██╗  ██╗██╗ ██████╗ ██╗  ██╗    ██████╗  ██████╗ ██╗     ██╗     ███████╗██████╗ \n" +
+                "██║  ██║██║██╔════╝ ██║  ██║    ██╔══██╗██╔═══██╗██║     ██║     ██╔════╝██╔══██╗\n" +
+                "███████║██║██║  ███╗███████║    ██████╔╝██║   ██║██║     ██║     █████╗  ██████╔╝\n" +
+                "██╔══██║██║██║   ██║██╔══██║    ██╔══██╗██║   ██║██║     ██║     ██╔══╝  ██╔══██╗\n" +
+                "██║  ██║██║╚██████╔╝██║  ██║    ██║  ██║╚██████╔╝███████╗███████╗███████╗██║  ██║\n" +
+                "╚═╝  ╚═╝╚═╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝";
         return result;
     }
 

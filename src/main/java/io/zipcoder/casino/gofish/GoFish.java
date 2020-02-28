@@ -262,6 +262,17 @@ public class GoFish extends CardGame implements GamblingGame {
     public void end(Player p1) {
     }
 
+    public String goFishImage(){
+        String result = " ██████╗  ██████╗ ███████╗██╗███████╗██╗  ██╗\n" +
+                "██╔════╝ ██╔═══██╗██╔════╝██║██╔════╝██║  ██║\n" +
+                "██║  ███╗██║   ██║█████╗  ██║███████╗███████║\n" +
+                "██║   ██║██║   ██║██╔══╝  ██║╚════██║██╔══██║\n" +
+                "╚██████╔╝╚██████╔╝██║     ██║███████║██║  ██║\n" +
+                " ╚═════╝  ╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝";
+
+        return result;
+    }
+
 
 
 }

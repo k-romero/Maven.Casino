@@ -20,7 +20,7 @@ public class BlackJackHandTest {
         Assert.assertEquals(expected, actual);
     }
 
-    @Test
+   /* @Test
     public void TestGetSumOfHand(){
         // Given
         BlackJackHand hand = new BlackJackHand();
@@ -46,6 +46,22 @@ public class BlackJackHandTest {
         hand.addCardToHand(new Card(Suit.CLUB, Face.ACE ));
         Integer expected = 16;
         Integer actual = hand.getSumOfHand(true);
+
+        // Then
+        Assert.assertEquals(expected, actual);
+
+    }*/
+
+    @Test
+    public void TestCalculateCards(){
+        // Given
+        BlackJackHand hand = new BlackJackHand();
+
+        // When
+        hand.addCardToHand(new Card(Suit.CLUB, Face.FIVE ));
+        hand.addCardToHand(new Card(Suit.CLUB, Face.JACK ));
+        Integer expected = 15;
+        Integer actual = hand.calculateCards(hand);
 
         // Then
         Assert.assertEquals(expected, actual);
