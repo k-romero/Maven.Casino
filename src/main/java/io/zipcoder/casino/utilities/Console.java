@@ -72,12 +72,15 @@ public final class Console {
             return longInput.intValue();
         } catch (NumberFormatException nfe) { // TODO - Eliminate recursive nature
             println("[ %s ] is an invalid user input!", stringInput);
-            println("Try inputting an integer value!");
-            return getLongInput(prompt, args).intValue();
+            println("Try inputting an integer value!: ");
+            return getIntegerInputWithoutln(prompt, args);
         }
-
-
     }
+
+    public void pressEnterToCount(){
+        getStringInputWithoutln("press enter to continue");
+    }
+
 
 }
 
