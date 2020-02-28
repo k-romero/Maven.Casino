@@ -21,7 +21,9 @@ public class GoFish extends CardGame implements GamblingGame {
 
     @Override
     public void start(Player p1) {
-        console.println("Welcome to Gofish");
+
+        console.println(goFishImage());
+//        console.println("Welcome to Gofish");
         Integer numOfNPC = promptForNumberNPC("Please enter number of NPCs: ");
         console.println(p1.getName()+" and "+numOfNPC+" others are playing.");
         promptForNextOrEnd(console);
@@ -237,6 +239,17 @@ public class GoFish extends CardGame implements GamblingGame {
 
     @Override
     public void end(Player p1) {
+    }
+
+    public String goFishImage(){
+        String result = " ██████╗  ██████╗ ███████╗██╗███████╗██╗  ██╗\n" +
+                "██╔════╝ ██╔═══██╗██╔════╝██║██╔════╝██║  ██║\n" +
+                "██║  ███╗██║   ██║█████╗  ██║███████╗███████║\n" +
+                "██║   ██║██║   ██║██╔══╝  ██║╚════██║██╔══██║\n" +
+                "╚██████╔╝╚██████╔╝██║     ██║███████║██║  ██║\n" +
+                " ╚═════╝  ╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝";
+
+        return result;
     }
 
 

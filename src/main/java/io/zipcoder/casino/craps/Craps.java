@@ -37,7 +37,14 @@ public class Craps extends DiceGame implements GamblingGame {
         //Main Game Logic
         while(gameInSession){
             if(player.getPlayerFunds() > 0){
-                console.println("Welcome To Craps!");
+                console.println("\n" +
+                        " ██████╗██████╗  █████╗ ██████╗ ███████╗    ████████╗ █████╗ ██████╗ ██╗     ███████╗\n" +
+                        "██╔════╝██╔══██╗██╔══██╗██╔══██╗██╔════╝    ╚══██╔══╝██╔══██╗██╔══██╗██║     ██╔════╝\n" +
+                        "██║     ██████╔╝███████║██████╔╝███████╗       ██║   ███████║██████╔╝██║     █████╗  \n" +
+                        "██║     ██╔══██╗██╔══██║██╔═══╝ ╚════██║       ██║   ██╔══██║██╔══██╗██║     ██╔══╝  \n" +
+                        "╚██████╗██║  ██║██║  ██║██║     ███████║       ██║   ██║  ██║██████╔╝███████╗███████╗\n" +
+                        " ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚══════╝       ╚═╝   ╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝\n" +
+                        "                                                                                     \n");
                 bet();
                 promptToContinue();
                 firstBetLocation();
@@ -173,18 +180,17 @@ public class Craps extends DiceGame implements GamblingGame {
     public void winnerWinner(){
         payOutMsg();
         currentPlayer.payOut(player1Bet*2);
-        displayAccountBalance();
-        start(startOverPlayer);
+        continueGameOrEnd();
     }
 
     public void loserLoser(){
         losePayMsg();
         this.pointSet = false;
         if(currentPlayer.getPlayerData().getPlayerFunds() == 0){
-            displayAccountBalance();
+            outOfFundsMsg();
            end(startOverPlayer);
         }
-        start(startOverPlayer);
+        continueGameOrEnd();
     }
 
 
@@ -212,18 +218,25 @@ public class Craps extends DiceGame implements GamblingGame {
         console.println("You have " + startOverPlayer.getPlayerFunds() + " in your account.");
     }
 
+    public void outOfFundsMsg(){
+        console.println("You are broke!!! Get out of here!");
+    }
+
     public void continueGameOrEnd(){
-        Integer result = console.getIntegerInput("Choose from the following:\n1 = Continue\n2 = View Account Info\n3 = Exit");
+        displayAccountBalance();
+        Integer result = console.getIntegerInput("Choose from the following:\n1 = Continue\n2 = Exit");
         if(result == 1){
             start(startOverPlayer);
         }else if(result == 2){
+            end(startOverPlayer);
         }
 
     }
 
 
     public void end(Player p1) {
-
+        this.gameInSession = false;
+        this.pointSet = false;
     }
 
 }
