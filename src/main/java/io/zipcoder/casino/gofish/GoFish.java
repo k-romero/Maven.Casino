@@ -20,6 +20,8 @@ public class GoFish extends CardGame implements GamblingGame {
 
     @Override
     public void start(Player p1) {
+
+        //prints welcome message
         console.println("Welcome to Gofish!");
 
         //set up deck and main player
@@ -30,7 +32,7 @@ public class GoFish extends CardGame implements GamblingGame {
         //get number of npc
         Integer numOfNPC = getNumOfNPC(p1);
 
-        //generate npc
+        //generate npc and put them into player list
         addNPCtoPlayerList(numOfNPC);
 
         //initial deal
@@ -47,7 +49,7 @@ public class GoFish extends CardGame implements GamblingGame {
             currentPlayer = getNextPlayer(currentPlayer);
         }
 
-        //game ends
+        //print message when game ends
         if(mainDeck.checkSize()==0)
             console.println("No card in the pool!");
         console.println("The game has ended.");
@@ -55,32 +57,6 @@ public class GoFish extends CardGame implements GamblingGame {
 
         //print result
         printGameResult(you);
-
-
-        /*
-                while(game not end){
-                    //step1: rotated thru every player
-                             turn(currentPlayer);
-                    //step2: switch to next player
-                             currentP = nextP
-                }
-                turn(){
-                    step0:  check for 4 of a kind <-(check if current player ran out of card, than terminate)
-                    step1:  choose a face to ask
-                    step2:  if(ask success)
-                            { get card with another turn }
-                            else(ask fail)
-                            {
-                                goFish/deal a card to player
-                                if(card had same face asked)
-                                  { player get a turn }
-                                else if (check4){
-                                    dump card
-                                    player get a turn
-                                }
-                            }
-                      }
-        */
 
     }
 
