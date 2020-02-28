@@ -112,7 +112,7 @@ public class Menu {
         game.start(p);
     }
     public static void blackjackQuickStart(Player p){
-        //BlackJack game = new BlackJack();
-        //game.start(p);
+        BlackJack game = new BlackJack(p);
+        game.start(p);
     }
 }
