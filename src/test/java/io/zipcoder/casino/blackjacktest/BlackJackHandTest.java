@@ -20,7 +20,7 @@ public class BlackJackHandTest {
         Assert.assertEquals(expected, actual);
     }
 
-    @Test
+   /* @Test
     public void TestGetSumOfHand(){
         // Given
         BlackJackHand hand = new BlackJackHand();
@@ -50,6 +50,6 @@ public class BlackJackHandTest {
         // Then
         Assert.assertEquals(expected, actual);
 
-    }
+    }*/
 
 }

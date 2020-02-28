@@ -20,6 +20,8 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
     Integer playerValue;
     Integer dealerValue;
     int betPlaced = 0;
+    boolean gameInProgress=true;
+    boolean gameFinished =false;
 
 
 
@@ -33,12 +35,7 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
 
     public BlackJack(Player p1){
         this.blackJackPlayer = new BlackJackPlayer(p1);
-
     }
-
-
-    boolean gameInProgress=true;
-    boolean gameFinished =false;
 
 
     @Override
@@ -47,38 +44,27 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
         while (gameInProgress){
             playerHand.getCardsOnHand().clear();
             dealerHand.getCardsOnHand().clear();
-          console.println("Welcome to Black Jack....");
-          placeBet();
-          blackJackPlayer.getPlayerData().reducePlayerFunds(betPlaced);
+            console.println("Welcome to Black Jack....");
+            placeBet();
+            blackJackPlayer.getPlayerData().reducePlayerFunds(betPlaced);
             deck.shuffleDeck();
             dealFirstSetOfBlackJet();
             playPlayerHand(playerHand);
-           playerValue= playerHand.calculateCards(playerHand);
+            playerValue= playerHand.calculateCards(playerHand);
             if (!checkIfBustAndWantsToPlayAgain(playerValue)&&!stand(playerHand)){
                  gameInProgress=false;
                  break;
             } else
-                 playDealerHand(dealerHand);
+                playDealerHand(dealerHand);
                 console.println("this is the value for dealer:  "+String.valueOf(dealerValue));
                 dealerHand.displayHands();
                 console.println("this is the value for player:  "+String.valueOf(playerValue));
                 playerHand.displayHands();
-            determineWin(playerValue,dealerValue);
-            }
+                determineWin(playerValue,dealerValue);
+        }
 
 
-            }
-
-
-
-
-
-
-
-
-
-
-
+    }
 
     public void placeBet() {
 
@@ -88,18 +74,17 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
             console.println("Sorry you do not have enough funds!");
            placeBet();
         } else if (betPlaced < 0) {
-            console.println("PLEASE DONT GIVE ME NOT NEGATIVE MONEY!");
+            console.println("PLEASE DONT GIVE ME NEGATIVE MONEY!");
             placeBet();
 
         } else {
             console.println(" you have placed a bet in the amount of:  " + betPlaced);
-
         }
-
 
     }
 
     public void dealFirstSetOfBlackJet (){
+
             console.println("PlayerCard:");
             CardGame.deal(deck, playerHand);
             CardGame.deal(deck, playerHand);
@@ -112,7 +97,9 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
             dealerValue=dealerHand.calculateCards(dealerHand);
             playerValue =playerHand.calculateCards(playerHand);
     }
+
     public void playPlayerHand( BlackJackHand playerHand ) {
+
         int userInput = this.console.getIntegerInput("Would you like to hit press (1) or stand press (2)");
         if (playerValue <= 21 && userInput == 1) {
             hit(playerHand);
@@ -122,7 +109,7 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
     }
     public boolean checkIfBustAndWantsToPlayAgain (int value){
         if ((playerValue >21)){
-            String wannaPlayAgain = console.getStringInput("You bust! wanna play again yes or No?");
+            String wannaPlayAgain = console.getStringInput("You bust! wanna play again yes or no?");
             if (wannaPlayAgain.equals("yes")){
                 playerHand.getCardsOnHand().clear();
                 dealerHand.getCardsOnHand().clear();
@@ -133,11 +120,8 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
             else if((dealerValue>21)) {
                determineWin(dealerValue,playerValue);
 
-
-
         } else if ( wannaPlayAgain.equals("no")) {
                 gameInProgress = gameFinished;
-
                 return gameFinished;
             }
         }
@@ -155,19 +139,15 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
     }
 
 
-
     public boolean  stand ( BlackJackHand hand){
         if (hand.equals(dealerHand)) {
-
-        return true;
-
-
+            return true;
         } else if (hand.equals(playerHand)){
         return true;
-
-
-    } return false;
+        }
+        return false;
     }
+
     public void hit(BlackJackHand hand) {
         if (hand.equals(playerHand)){
             CardGame.deal(deck,playerHand);
@@ -176,21 +156,12 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
             CardGame.deal(deck,dealerHand);
         dealerValue=dealerHand.calculateCards(dealerHand);
         }
-
-
     }
-
-
-    // 1 is to hit 2 is to stand
-
-
-
-    //
 
    public int determineWin (int pval, int dval){
         if((playerValue<dealerValue)){
 
-            String wannaPlayAgain = console.getStringInput("Dealer Won! wanna play again yes or No?");
+            String wannaPlayAgain = console.getStringInput("Dealer Won! wanna play again yes or no?");
             if (wannaPlayAgain.equals("yes")){
                 start(p2);
             } else if (wannaPlayAgain.equals("no")) {
@@ -201,7 +172,7 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
         }  if((playerValue>dealerValue)){
 
            blackJackPlayer.payOut(betPlaced*2);
-           String wannaPlayAgain = console.getStringInput("Player Won!   wanna play again yes or No?");
+           String wannaPlayAgain = console.getStringInput("Player Won!   wanna play again yes or no?");
            if (wannaPlayAgain.equals("yes")){
                start(p2);
            } else if (wannaPlayAgain.equals("no")) {
@@ -211,7 +182,7 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
            return 1;
 
         }  if((playerValue==dealerValue)){
-           String wannaPlayAgain = console.getStringInput("TIE!    wanna play again yes or No?");
+           String wannaPlayAgain = console.getStringInput("TIE!    wanna play again yes or no?");
            if (wannaPlayAgain.equals("yes")){
                blackJackPlayer.payOut(betPlaced);
                start(p2);
@@ -229,9 +200,6 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
     }
 
 
-
-
-
     @Override
     public void end(Player p1) {
       console.getStringInput("bye!");
@@ -240,7 +208,7 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
 
 
 /*    public  void Stand(BlackJackHand playerHand){
-        return playerHand.getSumOfHand()
+        return playerHand.getcalculateCards()
     }*/
 
 
