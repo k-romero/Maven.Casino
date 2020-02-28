@@ -8,6 +8,8 @@ public class Player {
     private boolean isDrunk;
     private int drinks = 0;
 
+    private int numOfFish = 0;
+
     public Player(String name){
         this.name = name;
         id = -1;
@@ -67,6 +69,14 @@ public class Player {
 
     public int getDrinks() {
         return drinks;
+    }
+
+    public int getNumOfFish() {
+        return numOfFish;
+    }
+
+    public void addAFish() {
+        this.numOfFish++;
     }
 
     @Override
