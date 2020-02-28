@@ -2,11 +2,18 @@ package io.zipcoder.casino.player;
 
 public class Player {
 
-    int id;
-    String name;
-    int playerFunds;
-    boolean isDrunk;
-    int drinks = 0;
+    private int id;
+    private String name;
+    private int playerFunds;
+    private boolean isDrunk;
+    private int drinks = 0;
+
+    public Player(String name){
+        this.name = name;
+        id = -1;
+        playerFunds = 1000;
+        isDrunk = false;
+    }
 
     public Player(int id, String name, int playerFunds, boolean isDrunk) {
         this.id = id;
