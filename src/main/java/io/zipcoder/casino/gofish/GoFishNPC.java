@@ -2,13 +2,17 @@ package io.zipcoder.casino.gofish;
 
 import io.zipcoder.casino.player.Player;
 import io.zipcoder.casino.tools.Face;
+import io.zipcoder.casino.utilities.Console;
 
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GoFishNPC extends GoFishPlayer {
+    Player p;
+    Console console = new Console(System.in, System.out);
     public GoFishNPC(Player player) {
         super(player);
+        p = player;
     }
 
     @Override
@@ -24,6 +28,7 @@ public class GoFishNPC extends GoFishPlayer {
             int currentIndex = ThreadLocalRandom.current().nextInt(0,players.size());
             randPlayer = players.get(currentIndex);
         }while( randPlayer.equals(this));
+        console.println(p+" chooses to ask "+ randPlayer+".");
         return randPlayer;
     }
 
@@ -31,8 +36,12 @@ public class GoFishNPC extends GoFishPlayer {
     public Face promptForFace(){
         ArrayList<Face> faces = this.getGoFishHand().listEveryFaceIHave();
         int whichFace = ThreadLocalRandom.current().nextInt(0, faces.size());
+        console.println(p+" asks for a "+faces.get(whichFace).getFaceString()+".");
         return faces.get(whichFace);
     }
 
-
+    @Override
+    public String toString(){
+        return this.getPlayerData().getName();
+    }
 }

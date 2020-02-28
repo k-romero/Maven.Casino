@@ -35,10 +35,15 @@ public abstract class Hand {
 
     public void displayHands(){
         for (Card c :cardsOnHand) {
-            System.out.println(c.toString());
+            System.out.println("[ "+c.toString()+" ]");
         }
     }
 
+    public void displayHandsWithSymbol(){
+        for (Card c :cardsOnHand) {
+            System.out.println("[ "+c.toString(true)+" ]");
+        }
+    }
     public int getNumOfCards(){
         return cardsOnHand.size();
     }
