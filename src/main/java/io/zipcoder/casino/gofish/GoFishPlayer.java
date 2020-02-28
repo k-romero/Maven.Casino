@@ -28,7 +28,7 @@ public class GoFishPlayer implements FriendlyPlayer, Comparable<GoFishPlayer> {
         if(they.getGoFishHand().doesMyHandHave(f)){
             console.println("Apparently "+they.getPlayerData().getName()+" has some "+f.getFaceString()+".");
             //they.getGoFishHand().displayHands();
-            console.println("So "+ they.getPlayerData().getName()+" handed over "+ they.getGoFishHand().howManyDoIHave(f)+" cards to "+this.getPlayerData().getName());
+            console.println("So "+ they+" handed over "+ they.getGoFishHand().howManyDoIHave(f)+" cards to "+this);
             they.getGoFishHand().giveCardsTo(f, myHand);
             promptForNextOrEnd(console);
             return true;
@@ -78,16 +78,14 @@ public class GoFishPlayer implements FriendlyPlayer, Comparable<GoFishPlayer> {
         if(players.size() == 2){
             return players.get(1);
         }
+        console.println("-- Please select a player to ask --");
+        for(int i=1; i<players.size(); i++){
+            console.println( " > ("+ i +") " + players.get(i) );
+        }
         while(true) {
-            console.println("-- Please select a player to ask --");
-            for(int i=1; i<players.size(); i++){
-                console.println( " > ("+ i +") " + players.get(i) );
-            }
             try {
                 index = console.getIntegerInputWithoutln("I will select: ");
-                if(index>players.size()){
-                    throw new InputMismatchException();
-                }
+                if(index>=players.size()){ throw new InputMismatchException(); }
                 break;
             }catch (Exception e){
                 console.println("Invalid Input! Please try again.");
@@ -96,34 +94,27 @@ public class GoFishPlayer implements FriendlyPlayer, Comparable<GoFishPlayer> {
         return players.get(index);
     }
 
-//    public Face stringToFace(String input){
-//        for(Face f: Face.values()){
-//            if(f.getFaceString().equalsIgnoreCase(input))
-//                return f;
-//        }
-//        return null;
-//    }
-
     public Face promptForFace(){
-        int val;
+        String input = "";
         ArrayList<Face> fs;
+        Face f;
         while(true) {
-            console.println("-- Please select a face to ask for --");
             fs = this.getGoFishHand().listEveryFaceIHave();
             for(int i=0; i<fs.size(); i++){
-                console.println( " > ("+ i +") "+ fs.get(i).getFaceString() );
+                console.println( " >  "+ fs.get(i).getFaceString() );
             }
+            console.println("-- Please select a rank to ask for --");
             try {
-                val = console.getIntegerInputWithoutln("I will select: ");
-                if(val>=fs.size()){
-                    throw new InputMismatchException();
-                }
+                input = console.getStringInputWithoutln("I will select: ");
+                f = Face.toFace(input);
+                if(f == null || !fs.contains(f))
+                    throw new Exception();
                 break;
             }catch (Exception e){
-                console.println("Invalid Input! Please try again.");
+                console.println("Input not recognized! Try again");
             }
         }
-        return fs.get(val);
+        return f;
     }
 
     @Override

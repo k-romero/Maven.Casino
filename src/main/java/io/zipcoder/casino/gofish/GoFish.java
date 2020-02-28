@@ -61,17 +61,18 @@ public class GoFish extends CardGame implements GamblingGame {
     }
 
     private void printWelcomeGoFIsh() {
+        console.println(goFishImage());
         console.println("Welcome to Go fish!");
     }
 
-    public Integer getNumOfNPC(Player p){
-        Integer numOfNPC = promptForNumberNPC("Please enter number of NPCs: ");
+    private Integer getNumOfNPC(Player p){
+        Integer numOfNPC = promptForNumberNPC("How many people do you want to play with?: ");
         console.println(p+" and "+numOfNPC+" others are playing.");
         promptForNextOrEnd(console);
         return numOfNPC;
     }
 
-    public GoFishPlayer randomSelectStartingPlayer(int numOfNPC){
+    private GoFishPlayer randomSelectStartingPlayer(int numOfNPC){
         int currentIndex = ThreadLocalRandom.current().nextInt(0,numOfNPC+1);
         console.println("A random player will be selected to start the game.");
         promptForNextOrEnd(console);
@@ -81,7 +82,7 @@ public class GoFish extends CardGame implements GamblingGame {
         return players.get(currentIndex);
     }
 
-    public void addNPCtoPlayerList(int numOfNPC){
+    private void addNPCtoPlayerList(int numOfNPC){
         for(int i=1; i<=numOfNPC; i++) {
             players.add(new GoFishNPC(new Player(-1,"NPC"+i,0,false)));
         }
@@ -94,7 +95,7 @@ public class GoFish extends CardGame implements GamblingGame {
             return 7;
     }
 
-    public void initialDeal(int numOfNPC){
+    private void initialDeal(int numOfNPC){
         int startingCardNum = getStartingCard(numOfNPC);
         for(int i=0; i<1+numOfNPC; i++) {
             for(int j=0; j<startingCardNum; j++)
@@ -104,7 +105,7 @@ public class GoFish extends CardGame implements GamblingGame {
         promptForNextOrEnd(console);
     }
 
-    public Boolean continueTurn(GoFishPlayer currentP){
+    private Boolean continueTurn(GoFishPlayer currentP){
 
         //Show the number of cards on everyone's hand, and the number of 4-if-a-kind matches
         showEveryoneNumOfCard();
@@ -141,7 +142,7 @@ public class GoFish extends CardGame implements GamblingGame {
             return continueTurn(currentP);
         }else{
             //go fish!
-            Card fish = drawFish( askedPlayer, currentP);
+            Card fish = saysGoFish( askedPlayer, currentP);
 
             if(fish != null) {
                 console.println(currentP + " draw a card from the pool.");
@@ -162,7 +163,7 @@ public class GoFish extends CardGame implements GamblingGame {
         return true;
     }
 
-    public void printFind4Msg(GoFishPlayer currentP, Face face){
+    private void printFind4Msg(GoFishPlayer currentP, Face face){
         console.println("Ooh! "+currentP+ "'s got 4-of-a-kind of "+face.getFaceString()+"!");
         promptForNextOrEnd(console);
         currentP.getGoFishHand().increaseTally();
@@ -174,19 +175,19 @@ public class GoFish extends CardGame implements GamblingGame {
         promptForNextOrEnd(console);
     }
 
-    public Face askForFace(GoFishPlayer currentP){
+    private Face askForFace(GoFishPlayer currentP){
         currentP.showUserTheHand();
         console.println("Now it's "+currentP+"'s turn to ask.");
         return currentP.promptForFace();
     }
 
-    public Card drawFish(GoFishPlayer askedPlayer, GoFishPlayer currentPlayer){
+    public Card saysGoFish(GoFishPlayer askedPlayer, GoFishPlayer currentPlayer){
         console.println(askedPlayer+" says GO FISH.");
         promptForNextOrEnd(console);
         return deal(mainDeck, currentPlayer.getGoFishHand());
     }
 
-    public void showEveryoneNumOfCard(){
+    private void showEveryoneNumOfCard(){
         console.println("=====Current Table=====");
         for(GoFishPlayer gp :players){
             console.println(gp+" has "+gp.getGoFishHand().getNumOfCards()+ " cards, Matched sets:" + gp.getGoFishHand().getTallyMatches());
@@ -195,7 +196,7 @@ public class GoFish extends CardGame implements GamblingGame {
 
     }
 
-    public Integer promptForNumberNPC(String msg){
+    private Integer promptForNumberNPC(String msg){
         while(true) {
             int x = console.getIntegerInputWithoutln(msg);
             if(x == 0)
@@ -237,7 +238,7 @@ public class GoFish extends CardGame implements GamblingGame {
         return players.get(index+1);
     }
 
-    public void printGameResult(GoFishPlayer you){
+    private void printGameResult(GoFishPlayer you){
         ArrayList<GoFishPlayer> tempP = new ArrayList<>(players);
         Collections.sort(tempP);
 
@@ -252,25 +253,27 @@ public class GoFish extends CardGame implements GamblingGame {
             console.println("You received a pack of Goldfish as reward!");
             you.getPlayerData().addAFish();
         }else{
-            console.println("Too bad....Try harder!");
+            console.println("Too bad... you lost, try harder!");
         }
-        console.println("Sending you back to lobby...come back next time!");
+        console.println("You will be sent back to the lobby, come back next time!");
         promptForNextOrEnd(console);
     }
 
-    @Override
-    public void end(Player p1) {
+    public String goFishImage(){
+        String result =
+                "                           .######....#######..########.####..######..##.....##\n" +
+                "  o        /`·. ¸         .##....##..##.....##.##........##..##....##.##.....##\n" +
+                " .        /¸...¸`:·       .##........##.....##.##........##..##.......##.....##\n" +
+                "  o    ¸.·´  ¸   `·.¸.·´) .##...####.##.....##.######....##...######..#########\n" +
+                "   . : © ):´;      ¸  {   .##....##..##.....##.##........##........##.##.....##\n" +
+                "      `·.¸ `·  ¸.·´\\`·¸)  .##....##..##.....##.##........##..##....##.##.....##\n" +
+                "          `\\\\´´\\¸.·´      ..######....#######..##.......####..######..##.....##\n";
+        return result;
     }
 
-    public String goFishImage(){
-        String result = " ██████╗  ██████╗ ███████╗██╗███████╗██╗  ██╗\n" +
-                "██╔════╝ ██╔═══██╗██╔════╝██║██╔════╝██║  ██║\n" +
-                "██║  ███╗██║   ██║█████╗  ██║███████╗███████║\n" +
-                "██║   ██║██║   ██║██╔══╝  ██║╚════██║██╔══██║\n" +
-                "╚██████╔╝╚██████╔╝██║     ██║███████║██║  ██║\n" +
-                " ╚═════╝  ╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝";
 
-        return result;
+    @Override
+    public void end(Player p1) {
     }
 
 
