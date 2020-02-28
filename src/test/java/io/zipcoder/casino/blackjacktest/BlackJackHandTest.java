@@ -51,5 +51,4 @@ public class BlackJackHandTest {
         Assert.assertEquals(expected, actual);
 
     }*/
-
 }
