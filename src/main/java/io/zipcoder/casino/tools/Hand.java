@@ -1,6 +1,7 @@
 package io.zipcoder.casino.tools;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 public abstract class Hand {
@@ -41,7 +42,7 @@ public abstract class Hand {
 
     public void displayHandsWithSymbol(){
         for (Card c :cardsOnHand) {
-            System.out.println("[ "+c.toString(true)+" ]");
+            System.out.println("[ "+c.toStringWithSymbol()+" ]");
         }
     }
     public int getNumOfCards(){
@@ -50,5 +51,9 @@ public abstract class Hand {
 
     public ArrayList<Card> getCardsOnHand() {
         return cardsOnHand;
+    }
+
+    public void sortCardsOnHand(){
+        Collections.sort(cardsOnHand);
     }
 }

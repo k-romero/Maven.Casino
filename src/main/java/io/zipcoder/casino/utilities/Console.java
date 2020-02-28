@@ -65,15 +65,14 @@ public final class Console {
     }
 
     public Integer getIntegerInputWithoutln(String prompt, Object... args) {
-        print(prompt, args);
-        String stringInput = input.nextLine();
-        try {
-            Long longInput = Long.parseLong(stringInput);
-            return longInput.intValue();
-        } catch (NumberFormatException nfe) { // TODO - Eliminate recursive nature
-            println("[ %s ] is an invalid user input!", stringInput);
-            println("Try inputting an integer value!: ");
-            return getIntegerInputWithoutln(prompt, args);
+        while(true) {
+            print(prompt, args);
+            String stringInput = input.nextLine();
+            try {
+                return Integer.parseInt(stringInput);
+            } catch (NumberFormatException nfe) {
+                println("Invalid Input! Try again.");
+            }
         }
     }
 
