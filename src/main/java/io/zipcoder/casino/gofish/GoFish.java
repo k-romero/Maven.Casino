@@ -22,7 +22,7 @@ public class GoFish extends CardGame implements GamblingGame {
     public void start(Player p1) {
 
         //prints welcome message
-        console.println("Welcome to Gofish!");
+        printWelcomeGoFIsh();
 
         //set up deck and main player
         mainDeck.shuffleDeck();
@@ -60,67 +60,8 @@ public class GoFish extends CardGame implements GamblingGame {
 
     }
 
-    public Boolean continueTurn(GoFishPlayer currentP){
-        showEveryoneNumOfCard();
-        if(currentP.getGoFishHand().getNumOfCards() == 0){
-            console.println(currentP+" has no cards on hand.");
-            return false;
-        }
-
-        Face face = check4(currentP.getGoFishHand());
-
-        if(face != null){//match found!!!!!
-            console.println("Ooh! "+currentP+ "'s got 4-of-a-kind of "+face.getFaceString()+"!");
-            promptForNextOrEnd(console);
-            currentP.getGoFishHand().increaseTally();
-            currentP.getGoFishHand().discardCardsWith(face);
-
-            console.println(currentP+"'s score is now "+currentP.getGoFishHand().getTallyMatches()+".");
-            console.println(currentP+" put the set on the table.");
-            console.println("Now "+currentP+" has "+currentP.getGoFishHand().getNumOfCards()+" cards on hand.");
-            promptForNextOrEnd(console);
-
-            if(currentP.getGoFishHand().getNumOfCards()==0){
-                console.println(currentP+" has no cards on hand.");
-                return false;
-            }
-        }
-
-        console.println("Now it's "+currentP+"'s turn to ask.");
-        currentP.showUserTheHand();
-        face = currentP.promptForFace();
-        GoFishPlayer askedPlayer = currentP.promptForPlayer(players);
-        console.println(currentP+" is asking "+askedPlayer+": Do you have any "+ face.getFaceString()+"?");
-        promptForNextOrEnd(console);
-
-        //if(ask success)
-        if(currentP.askFor(askedPlayer, face)){
-            currentP.showUserTheHand();
-            return continueTurn(currentP);
-        }else{
-            //r says go fish
-            console.println(askedPlayer+" says GO FISH.");
-            promptForNextOrEnd(console);
-            Card fish = deal(mainDeck, currentP.getGoFishHand());
-
-            if(fish != null) {
-                console.println(currentP + " draw a card from the pool.");
-                currentP.showUserTheFish(fish);
-                currentP.showUserTheHand();
-                promptForNextOrEnd(console);
-                if(fish.getFace().equals(face)){
-                    console.println(currentP + " drew a " +face.getFaceString()+"! "+currentP+" can now ask again!");
-                    promptForNextOrEnd(console);
-                    return continueTurn(currentP);
-                }else{
-                    if(check4(currentP.getGoFishHand()) != null)
-                        return continueTurn(currentP);
-                }
-
-            }
-
-        }
-        return true;
+    private void printWelcomeGoFIsh() {
+        console.println("Welcome to Go fish!");
     }
 
     public Integer getNumOfNPC(Player p){
@@ -163,6 +104,88 @@ public class GoFish extends CardGame implements GamblingGame {
         promptForNextOrEnd(console);
     }
 
+    public Boolean continueTurn(GoFishPlayer currentP){
+
+        //Show the number of cards on everyone's hand, and the number of 4-if-a-kind matches
+        showEveryoneNumOfCard();
+
+        //end game if player has no cards on them
+        if(currentP.getGoFishHand().getNumOfCards() == 0){
+            console.println(currentP+" has no cards on hand.");
+            return false;
+        }
+
+        //check if someone have 4-of-a-kind
+        Face face = check4(currentP.getGoFishHand());
+
+        //If there is and that player has no card, end the game
+        if(face != null){
+            printFind4Msg(currentP,face);
+            if(currentP.getGoFishHand().getNumOfCards()==0){
+                console.println(currentP+" has no cards on hand.");
+                return false;
+            }
+        }
+
+        //face choosing
+        face = askForFace(currentP);
+
+        //player choosing
+        GoFishPlayer askedPlayer = currentP.promptForPlayer(players);
+        console.println(currentP+" is asking "+askedPlayer+": Do you have any "+ face.getFaceString()+"?");
+        promptForNextOrEnd(console);
+
+        //if the ask succeed...
+        if(currentP.askFor(askedPlayer, face)){
+            currentP.showUserTheHand();
+            return continueTurn(currentP);
+        }else{
+            //go fish!
+            Card fish = drawFish( askedPlayer, currentP);
+
+            if(fish != null) {
+                console.println(currentP + " draw a card from the pool.");
+                currentP.showUserTheFish(fish);
+                currentP.showUserTheHand();
+                promptForNextOrEnd(console);
+
+                if(fish.getFace().equals(face)){
+                    console.println(currentP + " drew a " +face.getFaceString()+"! "+currentP+" can now ask again!");
+                    promptForNextOrEnd(console);
+                    return continueTurn(currentP);
+                }else{
+                    if(check4(currentP.getGoFishHand()) != null)
+                        return continueTurn(currentP);
+                }
+            }
+        }
+        return true;
+    }
+
+    public void printFind4Msg(GoFishPlayer currentP, Face face){
+        console.println("Ooh! "+currentP+ "'s got 4-of-a-kind of "+face.getFaceString()+"!");
+        promptForNextOrEnd(console);
+        currentP.getGoFishHand().increaseTally();
+        currentP.getGoFishHand().discardCardsWith(face);
+
+        console.println(currentP+"'s score is now "+currentP.getGoFishHand().getTallyMatches()+".");
+        console.println(currentP+" put the set on the table.");
+        console.println("Now "+currentP+" has "+currentP.getGoFishHand().getNumOfCards()+" cards on hand.");
+        promptForNextOrEnd(console);
+    }
+
+    public Face askForFace(GoFishPlayer currentP){
+        currentP.showUserTheHand();
+        console.println("Now it's "+currentP+"'s turn to ask.");
+        return currentP.promptForFace();
+    }
+
+    public Card drawFish(GoFishPlayer askedPlayer, GoFishPlayer currentPlayer){
+        console.println(askedPlayer+" says GO FISH.");
+        promptForNextOrEnd(console);
+        return deal(mainDeck, currentPlayer.getGoFishHand());
+    }
+
     public void showEveryoneNumOfCard(){
         console.println("=====Current Table=====");
         for(GoFishPlayer gp :players){
@@ -171,7 +194,6 @@ public class GoFish extends CardGame implements GamblingGame {
         console.println("=======================");
 
     }
-
 
     public Integer promptForNumberNPC(String msg){
         while(true) {
@@ -197,7 +219,6 @@ public class GoFish extends CardGame implements GamblingGame {
         }
     }
 
-
     public Face check4(GoFishHand hand){
 
         for(Face f: Face.values()){
@@ -215,7 +236,6 @@ public class GoFish extends CardGame implements GamblingGame {
         }
         return players.get(index+1);
     }
-
 
     public void printGameResult(GoFishPlayer you){
         ArrayList<GoFishPlayer> tempP = new ArrayList<>(players);
