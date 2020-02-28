@@ -1,15 +1,16 @@
 package io.zipcoder.casino.gofish;
-import io.zipcoder.casino.player.GamblingPlayer;
+import io.zipcoder.casino.player.FriendlyPlayer;
 import io.zipcoder.casino.player.Player;
+import io.zipcoder.casino.tools.Card;
 import io.zipcoder.casino.tools.Face;
 import io.zipcoder.casino.utilities.Console;
-
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 
+import static io.zipcoder.casino.gofish.GoFish.promptForNextOrEnd;
 
-public class GoFishPlayer implements GamblingPlayer {
+
+public class GoFishPlayer implements FriendlyPlayer, Comparable<GoFishPlayer> {
     private GoFishHand myHand;
     private Player player;
     Console console = new Console(System.in, System.out);
@@ -29,7 +30,7 @@ public class GoFishPlayer implements GamblingPlayer {
             //they.getGoFishHand().displayHands();
             console.println("So "+ they.getPlayerData().getName()+" handed over "+ they.getGoFishHand().howManyDoIHave(f)+" cards to "+this.getPlayerData().getName());
             they.getGoFishHand().giveCardsTo(f, myHand);
-            GoFish.promptForNextOrEnd(console);
+            promptForNextOrEnd(console);
             return true;
         }
         return false;
@@ -37,6 +38,11 @@ public class GoFishPlayer implements GamblingPlayer {
 
     public Player getPlayerData() {
         return player;
+    }
+
+    @Override
+    public void obtainFish() {
+        getPlayerData().addAFish();
     }
 
     public void placeBet(int value){
@@ -55,7 +61,14 @@ public class GoFishPlayer implements GamblingPlayer {
         return 0;
     }
 
+    public void showUserTheFish(Card fish){
+        console.println("It is a "+fish.toStringWithSymbol());
+        promptForNextOrEnd(console);
+    }
+
+
     public void showUserTheHand(){
+        this.getGoFishHand().sortCardsOnHand();
         console.println("Cards on your hand are: ");
         this.getGoFishHand().displayHandsWithSymbol();
     }
@@ -66,7 +79,7 @@ public class GoFishPlayer implements GamblingPlayer {
             return players.get(1);
         }
         while(true) {
-            console.println("[ Please select a player to ask ]");
+            console.println("-- Please select a player to ask --");
             for(int i=1; i<players.size(); i++){
                 console.println( " > ("+ i +") " + players.get(i) );
             }
@@ -95,7 +108,7 @@ public class GoFishPlayer implements GamblingPlayer {
         int val;
         ArrayList<Face> fs;
         while(true) {
-            console.println("[ Please select a face to ask for ]");
+            console.println("-- Please select a face to ask for --");
             fs = this.getGoFishHand().listEveryFaceIHave();
             for(int i=0; i<fs.size(); i++){
                 console.println( " > ("+ i +") "+ fs.get(i).getFaceString() );
@@ -118,4 +131,8 @@ public class GoFishPlayer implements GamblingPlayer {
         return this.getPlayerData().getName();
     }
 
+    @Override
+    public int compareTo(GoFishPlayer p) {
+        return p.getGoFishHand().getTallyMatches()-getGoFishHand().getTallyMatches();
+    }
 }

@@ -74,6 +74,7 @@ public class Menu {
         String info = "";
         info += "Name: "+p.getName()+"\n";
         info += "Balance: "+p.getPlayerFunds()+"\n";
+        info += "Number of Fish:"+p.getNumOfFish()+"\n";
         c.println(info);
         c.pressEnterToCount();
     }

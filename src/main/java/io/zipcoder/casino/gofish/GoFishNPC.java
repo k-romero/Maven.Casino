@@ -1,6 +1,7 @@
 package io.zipcoder.casino.gofish;
 
 import io.zipcoder.casino.player.Player;
+import io.zipcoder.casino.tools.Card;
 import io.zipcoder.casino.tools.Face;
 import io.zipcoder.casino.utilities.Console;
 
@@ -13,6 +14,10 @@ public class GoFishNPC extends GoFishPlayer {
     public GoFishNPC(Player player) {
         super(player);
         p = player;
+    }
+
+    @Override
+    public void showUserTheFish(Card fish){
     }
 
     @Override
