@@ -14,86 +14,72 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GoFish extends CardGame implements GamblingGame {
 
-
     ArrayList<GoFishPlayer> players = new ArrayList<>();
     Deck mainDeck = new Deck();
     Console console = new Console(System.in, System.out);
 
     @Override
     public void start(Player p1) {
-        console.println("Welcome to Gofish");
-        Integer numOfNPC = promptForNumberNPC("Please enter number of NPCs: ");
-        console.println(p1.getName()+" and "+numOfNPC+" others are playing.");
-        promptForNextOrEnd(console);
+        console.println("Welcome to Gofish!");
 
-        //===============Set up===============
+        //set up deck and main player
         mainDeck.shuffleDeck();
         GoFishPlayer you = new GoFishPlayer(p1);
         players.add(you);
 
+        //get number of npc
+        Integer numOfNPC = getNumOfNPC(p1);
+
         //generate npc
-        for(int i=1; i<=numOfNPC; i++) {
-            players.add(new GoFishNPC(new Player(-1,"NPC"+i,0,false)));
-        }
+        addNPCtoPlayerList(numOfNPC);
 
         //initial deal
-        int startingCardNum = 7;
+        initialDeal(numOfNPC);
 
-        if(numOfNPC>1)
-            startingCardNum = 5;
-
-        for(int i=0; i<1+numOfNPC; i++) {
-            for(int j=0; j<startingCardNum; j++)
-                deal(mainDeck, players.get(i).getGoFishHand());
-        }
-
-        console.println(startingCardNum+ " cards are dealt to each player.");
-        promptForNextOrEnd(console);
+        //show player their hand
         players.get(0).showUserTheHand();
 
         //randomly select starting player
-        int currentIndex = ThreadLocalRandom.current().nextInt(0,numOfNPC+1);
-        GoFishPlayer currentPlayer = players.get(currentIndex);
+        GoFishPlayer currentPlayer = randomSelectStartingPlayer(numOfNPC);
 
-        console.println("A random player will be selected to start the game.");
-        promptForNextOrEnd(console);
-        console.println(players.get(currentIndex)+" is selected.");
-        promptForNextOrEnd(console);
-
-
+        //start turn loop
         while(mainDeck.checkSize()!=0 && continueTurn(currentPlayer)){
             currentPlayer = getNextPlayer(currentPlayer);
         }
+
+        //game ends
         if(mainDeck.checkSize()==0)
             console.println("No card in the pool!");
         console.println("The game has ended.");
         promptForNextOrEnd(console);
+
+        //print result
         printGameResult(you);
 
 
         /*
-            while(game not end){
-                //step1: rotated thru every player
-                         turn(currentPlayer);
-                //step2: switch to next player
-                         currentP = nextP
-            }
-            turn(){
-                step0:  check for 4 of a kind <-(check if current player ran out of card, than terminate)
-                step1:  choose a face to ask
-                step2:  if(ask success)
-                        { get card with another turn }
-                        else(ask fail)
-                        {
-                            goFish/deal a card to player
-                            if(card had same face asked)
-                              { player get a turn }
-                            else if (check4){
-                                dump card
-                                player get a turn
+                while(game not end){
+                    //step1: rotated thru every player
+                             turn(currentPlayer);
+                    //step2: switch to next player
+                             currentP = nextP
+                }
+                turn(){
+                    step0:  check for 4 of a kind <-(check if current player ran out of card, than terminate)
+                    step1:  choose a face to ask
+                    step2:  if(ask success)
+                            { get card with another turn }
+                            else(ask fail)
+                            {
+                                goFish/deal a card to player
+                                if(card had same face asked)
+                                  { player get a turn }
+                                else if (check4){
+                                    dump card
+                                    player get a turn
+                                }
                             }
-                        }
-                  }
+                      }
         */
 
     }
@@ -161,12 +147,52 @@ public class GoFish extends CardGame implements GamblingGame {
         return true;
     }
 
-    public void showEveryoneNumOfCard(){
-        console.println("=====Current number of cards=====");
-        for(GoFishPlayer gp :players){
-            console.println(gp+" has "+gp.getGoFishHand().getNumOfCards()+ " cards.");
+    public Integer getNumOfNPC(Player p){
+        Integer numOfNPC = promptForNumberNPC("Please enter number of NPCs: ");
+        console.println(p+" and "+numOfNPC+" others are playing.");
+        promptForNextOrEnd(console);
+        return numOfNPC;
+    }
+
+    public GoFishPlayer randomSelectStartingPlayer(int numOfNPC){
+        int currentIndex = ThreadLocalRandom.current().nextInt(0,numOfNPC+1);
+        console.println("A random player will be selected to start the game.");
+        promptForNextOrEnd(console);
+        console.println(players.get(currentIndex)+" is selected.");
+        promptForNextOrEnd(console);
+
+        return players.get(currentIndex);
+    }
+
+    public void addNPCtoPlayerList(int numOfNPC){
+        for(int i=1; i<=numOfNPC; i++) {
+            players.add(new GoFishNPC(new Player(-1,"NPC"+i,0,false)));
         }
-        console.println("=================================");
+    }
+
+    public int getStartingCard(int numOfNPC){
+        if(numOfNPC>1)
+            return 5;
+        else
+            return 7;
+    }
+
+    public void initialDeal(int numOfNPC){
+        int startingCardNum = getStartingCard(numOfNPC);
+        for(int i=0; i<1+numOfNPC; i++) {
+            for(int j=0; j<startingCardNum; j++)
+                deal(mainDeck, players.get(i).getGoFishHand());
+        }
+        console.println(startingCardNum+ " cards are dealt to each player.");
+        promptForNextOrEnd(console);
+    }
+
+    public void showEveryoneNumOfCard(){
+        console.println("=====Current Table=====");
+        for(GoFishPlayer gp :players){
+            console.println(gp+" has "+gp.getGoFishHand().getNumOfCards()+ " cards, Matched sets:" + gp.getGoFishHand().getTallyMatches());
+        }
+        console.println("=======================");
 
     }
 
@@ -228,6 +254,7 @@ public class GoFish extends CardGame implements GamblingGame {
                 tempP.get(1).getGoFishHand().getTallyMatches() < you.getGoFishHand().getTallyMatches()){
             console.println("You won!");
             console.println("You received a pack of Goldfish as reward!");
+            you.getPlayerData().addAFish();
         }else{
             console.println("Too bad....Try harder!");
         }
