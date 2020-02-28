@@ -61,4 +61,9 @@ public class Player {
     public int getDrinks() {
         return drinks;
     }
+
+    @Override
+    public String toString(){
+        return this.getName();
+    }
 }

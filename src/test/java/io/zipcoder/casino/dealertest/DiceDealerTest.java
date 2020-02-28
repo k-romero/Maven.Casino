@@ -17,10 +17,9 @@ public class DiceDealerTest {
     @Test
     public void sumOfDice() {
         DiceDealer diceDealer = new DiceDealer(2);
-        Integer numberOfDice = 2;
-        Integer upperRange = numberOfDice * 6;
+        diceDealer.rollDice();
         Integer actual = diceDealer.getValue();
-        Assert.assertTrue(actual >= numberOfDice && actual <= upperRange);
+        Assert.assertTrue(actual >= 2 && actual <= 12);
 
     }
 }
