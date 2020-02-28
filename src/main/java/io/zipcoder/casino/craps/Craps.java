@@ -33,10 +33,11 @@ public class Craps extends DiceGame implements GamblingGame {
         this.currentPlayer = crapsPlayer;
         this.bets = new HashMap<>();
         gameInSession = true;
-        console.println("Welcome To Craps!");
 
+        //Main Game Logic
         while(gameInSession){
             if(player.getPlayerFunds() > 0){
+                console.println("Welcome To Craps!");
                 bet();
                 promptToContinue();
                 firstBetLocation();
@@ -47,11 +48,6 @@ public class Craps extends DiceGame implements GamblingGame {
                 }
             } else break;
         }
-    }
-
-    @Override
-    public void end(Player p1) {
-
     }
 
     // Give Options for passLine and dontPassLine
@@ -65,6 +61,7 @@ public class Craps extends DiceGame implements GamblingGame {
             bet();
         } else {
             player1Bet = bet;
+            currentPlayer.getPlayerData().reducePlayerFunds(bet);
             console.println(currentPlayer.getPlayerData().getName() + " is betting "+ player1Bet + ".");
         }
     }
@@ -122,12 +119,19 @@ public class Craps extends DiceGame implements GamblingGame {
     }
 
     public void evalAfterPointSet(){
-        if(checkPointNumbers.contains(lastDiceRoll) && lastDiceRoll == pointValue){
-            winnerWinner();
-            this.pointSet = false;
-        } else if(lastDiceRoll == 7){
+        if(lastDiceRoll == 7){
             crapsRolled();
-        } else pointSetActions();
+        } else if(lastDiceRoll.equals(pointValue) && checkPointNumbers.contains(lastDiceRoll)){
+            evalPassOrDontPassAfterPointHits();
+        }  else pointSetActions();
+    }
+
+    public void evalPassOrDontPassAfterPointHits(){
+        if(bets.containsKey("dontpass")){
+            loserLoser();
+        } else {
+            winnerWinner();
+        }
     }
 
     public void setPoint(){
@@ -152,36 +156,32 @@ public class Craps extends DiceGame implements GamblingGame {
 
     public void passWinDontPassLose(){
         if(bets.containsKey("pass")){
-            payOutMsg();
-            currentPlayer.payOut(player1Bet*2);
+            winnerWinner();
         }else {
-            losePayMsg();
-            currentPlayer.getPlayerData().reducePlayerFunds(player1Bet);
+            loserLoser();
         }
-        start(startOverPlayer);
     }
 
     public void passLoseDontPassWin(){
         if(bets.containsKey("dontPass")){
-            payOutMsg();
-            currentPlayer.payOut(player1Bet*2);
+            winnerWinner();
         }else {
-            losePayMsg();
-            currentPlayer.getPlayerData().reducePlayerFunds(player1Bet);
+            loserLoser();
         }
-        start(startOverPlayer);
     }
 
     public void winnerWinner(){
+        payOutMsg();
         currentPlayer.payOut(player1Bet*2);
+        displayAccountBalance();
         start(startOverPlayer);
     }
 
     public void loserLoser(){
         losePayMsg();
         this.pointSet = false;
-        currentPlayer.getPlayerData().reducePlayerFunds(player1Bet);
         if(currentPlayer.getPlayerData().getPlayerFunds() == 0){
+            displayAccountBalance();
            end(startOverPlayer);
         }
         start(startOverPlayer);
@@ -206,6 +206,24 @@ public class Craps extends DiceGame implements GamblingGame {
 
     public void losePayMsg(){
         console.println("You lose " + (player1Bet) + ".");
+    }
+
+    public void displayAccountBalance(){
+        console.println("You have " + startOverPlayer.getPlayerFunds() + " in your account.");
+    }
+
+    public void continueGameOrEnd(){
+        Integer result = console.getIntegerInput("Choose from the following:\n1 = Continue\n2 = View Account Info\n3 = Exit");
+        if(result == 1){
+            start(startOverPlayer);
+        }else if(result == 2){
+        }
+
+    }
+
+
+    public void end(Player p1) {
+
     }
 
 }

@@ -27,4 +27,20 @@ public class BlackJackHand extends Hand {
         return sum;
     }
 
+    public int  calculateCards (Hand hand){
+        Integer sum=0;
+        for( Card c : super.getCardsOnHand()){
+            if(c.getFace().getValue() > 10){
+                sum += 10;} else
+
+                sum+= c.getFace().getValue();
+
+
+
+        }
+        return sum;
+}
+
+
+
 }
