@@ -31,6 +31,7 @@ public class Craps extends DiceGame implements GamblingGame {
         this.startOverPlayer = player;
         CrapsPlayer crapsPlayer = new CrapsPlayer(player);
         this.currentPlayer = crapsPlayer;
+        this.bets = new HashMap<>();
         gameInSession = true;
         console.println("Welcome To Craps!");
 
@@ -41,11 +42,10 @@ public class Craps extends DiceGame implements GamblingGame {
                 firstBetLocation();
                 rollDice();
                 evalComeOutRoll();
-                if(pointSet){
-                    rollDice();
-
+                while(pointSet){
+                    pointSetActions();
                 }
-            }
+            } else break;
         }
     }
 
@@ -108,7 +108,9 @@ public class Craps extends DiceGame implements GamblingGame {
     }
 
     public void rollDice(){
+        promptToRollDice();
         lastDiceRoll = currentPlayer.rollDice();
+        rollDiceMsg();
     }
 
     public void evalComeOutRoll(){
@@ -120,17 +122,32 @@ public class Craps extends DiceGame implements GamblingGame {
     }
 
     public void evalAfterPointSet(){
-        if(checkPointNumbers.contains(lastDiceRoll)){
+        if(checkPointNumbers.contains(lastDiceRoll) && lastDiceRoll == pointValue){
             winnerWinner();
-        } else if(twoThreeTwelve.contains(lastDiceRoll)){
-            passLoseDontPassWin();
-        } else setPoint();
+            this.pointSet = false;
+        } else if(lastDiceRoll == 7){
+            crapsRolled();
+        } else pointSetActions();
     }
 
     public void setPoint(){
         pointSet = true;
         pointValue = lastDiceRoll;
         console.println("Point is set at " + pointValue + ".");
+    }
+
+    public void pointSetActions(){
+        rollDice();
+        evalAfterPointSet();
+    }
+
+    public void crapsRolled(){
+        if(bets.containsKey("pass")){
+            console.println("CRAPS!");
+            loserLoser();
+        } else {
+            winnerWinner();
+        }
     }
 
     public void passWinDontPassLose(){
@@ -162,13 +179,25 @@ public class Craps extends DiceGame implements GamblingGame {
 
     public void loserLoser(){
         losePayMsg();
+        this.pointSet = false;
         currentPlayer.getPlayerData().reducePlayerFunds(player1Bet);
+        if(currentPlayer.getPlayerData().getPlayerFunds() == 0){
+           end(startOverPlayer);
+        }
         start(startOverPlayer);
     }
 
 
     public void promptToContinue() {
         console.getStringInput("Press Enter to continue.");
+    }
+
+    public void promptToRollDice() {
+        console.getStringInput("Press Enter to roll dice.");
+    }
+
+    public void rollDiceMsg() {
+        console.getStringInput("Shooter rolled " + lastDiceRoll + ".");
     }
 
     public void payOutMsg(){
