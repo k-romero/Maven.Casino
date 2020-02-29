@@ -85,7 +85,7 @@ public class GoFishPlayer implements FriendlyPlayer, Comparable<GoFishPlayer> {
         while(true) {
             try {
                 index = console.getIntegerInputWithoutln("I will select: ");
-                if(index>=players.size()){ throw new InputMismatchException(); }
+                if(index>=players.size()){ throw new Exception(); }
                 break;
             }catch (Exception e){
                 console.println("Invalid Input! Please try again.");

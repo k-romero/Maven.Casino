@@ -26,6 +26,11 @@ public final class Console {
         print(val + "\n", vals);
     }
 
+    public void printlnS(String val, Object... vals) {
+        System.out.println(val);
+    }
+
+
     public String getStringInput(String prompt, Object... args) {
         println(prompt, args);
         return input.nextLine();

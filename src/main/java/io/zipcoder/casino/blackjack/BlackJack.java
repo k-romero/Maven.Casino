@@ -22,23 +22,13 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
     Integer dealerValue;
     int betPlaced = 0;
 
-
-
-
-
-
-    public BlackJack(Player p1){
-        this.blackJackPlayer = new BlackJackPlayer(p1);
-
-    }
-
     boolean gameInProgress=true;
     boolean gameFinished =false;
 
 
     @Override
     public void start(Player player) {
-
+        this.blackJackPlayer = new BlackJackPlayer(player);
 
         while (gameInProgress){
             playerHand.getCardsOnHand().clear();

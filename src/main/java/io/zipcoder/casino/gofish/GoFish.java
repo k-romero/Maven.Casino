@@ -20,42 +20,25 @@ public class GoFish extends CardGame implements GamblingGame {
 
     @Override
     public void start(Player p1) {
-
-        //prints welcome message
         printWelcomeGoFIsh();
-
-        //set up deck and main player
         mainDeck.shuffleDeck();
         GoFishPlayer you = new GoFishPlayer(p1);
         players.add(you);
-
-        //get number of npc
-        Integer numOfNPC = getNumOfNPC(p1);
-
-        //generate npc and put them into player list
+        int numOfNPC = getNumOfNPC(p1);
         addNPCtoPlayerList(numOfNPC);
-
-        //initial deal
         initialDeal(numOfNPC);
-
-        //show player their hand
         players.get(0).showUserTheHand();
-
-        //randomly select starting player
         GoFishPlayer currentPlayer = randomSelectStartingPlayer(numOfNPC);
 
-        //start turn loop
         while(mainDeck.checkSize()!=0 && continueTurn(currentPlayer)){
             currentPlayer = getNextPlayer(currentPlayer);
         }
 
-        //print message when game ends
         if(mainDeck.checkSize()==0)
             console.println("No card in the pool!");
         console.println("The game has ended.");
         promptForNextOrEnd(console);
 
-        //print result
         printGameResult(you);
 
     }
@@ -66,7 +49,7 @@ public class GoFish extends CardGame implements GamblingGame {
     }
 
     private Integer getNumOfNPC(Player p){
-        Integer numOfNPC = promptForNumberNPC("How many people do you want to play with?: ");
+        Integer numOfNPC = promptForNumberNPC();
         console.println(p+" and "+numOfNPC+" others are playing.");
         promptForNextOrEnd(console);
         return numOfNPC;
@@ -107,19 +90,15 @@ public class GoFish extends CardGame implements GamblingGame {
 
     private Boolean continueTurn(GoFishPlayer currentP){
 
-        //Show the number of cards on everyone's hand, and the number of 4-if-a-kind matches
         showEveryoneNumOfCard();
 
-        //end game if player has no cards on them
         if(currentP.getGoFishHand().getNumOfCards() == 0){
             console.println(currentP+" has no cards on hand.");
             return false;
         }
 
-        //check if someone have 4-of-a-kind
         Face face = check4(currentP.getGoFishHand());
 
-        //If there is and that player has no card, end the game
         if(face != null){
             printFind4Msg(currentP,face);
             if(currentP.getGoFishHand().getNumOfCards()==0){
@@ -128,20 +107,17 @@ public class GoFish extends CardGame implements GamblingGame {
             }
         }
 
-        //face choosing
         face = askForFace(currentP);
 
-        //player choosing
         GoFishPlayer askedPlayer = currentP.promptForPlayer(players);
         console.println(currentP+" is asking "+askedPlayer+": Do you have any "+ face.getFaceString()+"?");
         promptForNextOrEnd(console);
 
-        //if the ask succeed...
         if(currentP.askFor(askedPlayer, face)){
             currentP.showUserTheHand();
             return continueTurn(currentP);
         }else{
-            //go fish!
+
             Card fish = saysGoFish( askedPlayer, currentP);
 
             if(fish != null) {
@@ -196,13 +172,13 @@ public class GoFish extends CardGame implements GamblingGame {
 
     }
 
-    private Integer promptForNumberNPC(String msg){
+    private Integer promptForNumberNPC(){
         while(true) {
-            int x = console.getIntegerInputWithoutln(msg);
+            int x = console.getIntegerInputWithoutln("How many people do you want to play with?: ");
             if(x == 0)
-                console.println("You can't play without NPC! Please try again.");
+                console.println("You can't play alone! Please try again.");
             else if(x < 0)
-                console.println("You can't play with negative number of people! Please try again.");
+                console.println("You really need some friends.");
             else if (x > 5)
                 console.println("That's too many people! Please try a number less then 5.");
             else
@@ -261,13 +237,13 @@ public class GoFish extends CardGame implements GamblingGame {
 
     public String goFishImage(){
         String result =
-                "                           .######....#######..########.####..######..##.....##\n" +
-                "  o        /`·. ¸         .##....##..##.....##.##........##..##....##.##.....##\n" +
-                " .        /¸...¸`:·       .##........##.....##.##........##..##.......##.....##\n" +
-                "  o    ¸.·´  ¸   `·.¸.·´) .##...####.##.....##.######....##...######..#########\n" +
-                "   . : © ):´;      ¸  {   .##....##..##.....##.##........##........##.##.....##\n" +
-                "      `·.¸ `·  ¸.·´\\`·¸)  .##....##..##.....##.##........##..##....##.##.....##\n" +
-                "          `\\\\´´\\¸.·´      ..######....#######..##.......####..######..##.....##\n";
+                "                              .######....#######..########.####..######..##.....##\n" +
+                "  o        /`·. ¸          .##....##..##.....##.##........##..##....##.##.....##\n" +
+                " .        /¸...¸`:·        .##........##.....##.##........##..##.......##.....##\n" +
+                "  o    ¸.·´  ¸   `·.¸.·´)  .##...####.##.....##.######....##...######..#########\n" +
+                "   . : © ):´;      ¸  {     .##....##..##.....##.##........##........##.##.....##\n" +
+                "      `·.¸ `·  ¸.·´\\`·¸)    .##....##..##.....##.##........##..##....##.##.....##\n" +
+                "          `\\\\´´\\¸.·´          ..######....#######..##.......####..######..##.....##\n";
         return result;
     }
 
