@@ -22,7 +22,7 @@ public enum Menu {
         return name;
     }
 
-    public List<String> getShortKey() {
+    public List<String> getShortKeys() {
         return Arrays.asList(shortKeys);
     }
 }

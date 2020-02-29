@@ -80,7 +80,7 @@ public class Casino {
     public Menu getMenuItemByInput(String input){
         input = input.toLowerCase();
         for (Menu m:selection.keySet()) {
-            if(m.getShortKey().contains(input) || m.getName().equalsIgnoreCase(input))
+            if(m.getShortKeys().contains(input) || m.getName().equalsIgnoreCase(input))
                 return m;
         }
         return null;
