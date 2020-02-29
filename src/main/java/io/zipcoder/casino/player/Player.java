@@ -2,11 +2,20 @@ package io.zipcoder.casino.player;
 
 public class Player {
 
-    int id;
-    String name;
-    int playerFunds;
-    boolean isDrunk;
-    int drinks = 0;
+    private int id;
+    private String name;
+    private int playerFunds;
+    private boolean isDrunk;
+    private int drinks = 0;
+
+    private int numOfFish = 0;
+
+    public Player(String name){
+        this.name = name;
+        id = -1;
+        playerFunds = 1000;
+        isDrunk = false;
+    }
 
     public Player(int id, String name, int playerFunds, boolean isDrunk) {
         this.id = id;
@@ -41,6 +50,8 @@ public class Player {
 
     public void addPlayerFunds(int amountWantsToAdd){ this.playerFunds += amountWantsToAdd; }
 
+    public void reducePlayerFunds(int amountWantsToReduce){ this.playerFunds -= amountWantsToReduce; }
+
     public boolean isDrunk() {
         if(this.drinks > 3){
             this.isDrunk = true;
@@ -58,5 +69,18 @@ public class Player {
 
     public int getDrinks() {
         return drinks;
+    }
+
+    public int getNumOfFish() {
+        return numOfFish;
+    }
+
+    public void addAFish() {
+        this.numOfFish++;
+    }
+
+    @Override
+    public String toString(){
+        return this.getName();
     }
 }

@@ -8,7 +8,7 @@ public enum Location {
     NINE    ("9",9),
     TEN     ("10",10),
     PASS    ("pass",1),
-    NOTTPASS("notPass",-1),
+    DONTPASS("dontPass",-1),
     COME    ("come",13),
     NOTCOME ("notCome",-13);
 

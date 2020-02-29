@@ -3,17 +3,21 @@ package io.zipcoder.casino.dealer;
 import io.zipcoder.casino.tools.Dice;
 
 public  class DiceDealer extends Dealer {
-    Integer value;
+    Integer diceValue;
     Dice dice;
+
     public DiceDealer( int numberOfDice){
         this.dice= new Dice(numberOfDice);
-        this.value=dice.tossAndSum();
-
+        this.diceValue = 0;
     }
+
     public Integer getValue() {
-        return value;
+        return diceValue;
     }
 
+    public void rollDice(){
+        this.diceValue = dice.tossAndSum();
+    }
 
 
 }

@@ -1,6 +1,7 @@
 package io.zipcoder.casino.tools;
 
 import java.util.Collections;
+import java.util.EmptyStackException;
 import java.util.Stack;
 
 public class Deck {
@@ -18,20 +19,31 @@ public class Deck {
         }
     }
 
-    public Card peek() {
+    public Card peekDeck() {
         return deck.peek();
     }
-    public void remove(){
-        deck.pop();
+
+    public Card popACard(){
+        return deck.pop();
     }
-    public void shuffle(){
-        Collections.shuffle(deck);
-    }
+
     public int checkSize(){
         return deck.size();
     }
-    public Stack getDeck(){
+
+    public void shuffleDeck(){
+        Collections.shuffle(deck);
+    }
+
+    public Stack<Card> getDeck(){
         return deck;
+    }
+    public Card takeCard(){
+        try {
+            return popACard();
+        }catch (EmptyStackException e ){
+            return null;
+        }
     }
 
     @Override

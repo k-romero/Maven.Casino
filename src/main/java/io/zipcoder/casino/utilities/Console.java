@@ -3,6 +3,7 @@ package io.zipcoder.casino.utilities;
 
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -25,8 +26,18 @@ public final class Console {
         print(val + "\n", vals);
     }
 
+    public void printlnS(String val, Object... vals) {
+        System.out.println(val);
+    }
+
+
     public String getStringInput(String prompt, Object... args) {
         println(prompt, args);
+        return input.nextLine();
+    }
+
+    public String getStringInputWithoutln(String prompt, Object... args) {
+        print(prompt, args);
         return input.nextLine();
     }
 
@@ -57,5 +68,23 @@ public final class Console {
     public Integer getIntegerInput(String prompt, Object... args) {
         return getLongInput(prompt, args).intValue();
     }
+
+    public Integer getIntegerInputWithoutln(String prompt, Object... args) {
+        while(true) {
+            print(prompt, args);
+            String stringInput = input.nextLine();
+            try {
+                return Integer.parseInt(stringInput);
+            } catch (NumberFormatException nfe) {
+                println("Invalid Input! Try again.");
+            }
+        }
+    }
+
+    public void pressEnterToCount(){
+        getStringInputWithoutln("press enter to continue");
+    }
+
+
 }
 
