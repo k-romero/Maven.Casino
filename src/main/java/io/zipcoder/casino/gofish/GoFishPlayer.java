@@ -97,14 +97,15 @@ public class GoFishPlayer implements FriendlyPlayer, Comparable<GoFishPlayer> {
         Face f;
         while(true) {
             fs = this.getGoFishHand().listEveryFaceIHave();
+            console.println("-- Please select a rank to ask for --");
             for (Face face : fs) {
                 console.println(" >  " + face.getFaceString());
             }
-            console.println("-- Please select a rank to ask for --");
             input = console.getStringInputWithoutln("I will select: ");
             f = Face.toFace(input);
-
-            if(f == null || !fs.contains(f)){
+            if(input.equalsIgnoreCase("bye") || input.equalsIgnoreCase("end")) {
+                return null;
+            }else if(f == null || !fs.contains(f)){
                 console.println("Input not recognized! Try again");
             }else{
                 break;

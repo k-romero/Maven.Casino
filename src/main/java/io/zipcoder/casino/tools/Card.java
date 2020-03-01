@@ -18,12 +18,22 @@ public class Card implements Comparable<Card> {
 
     @Override
     public String toString() {
-        return (face.getFaceString() + " " + suit.getSuitName());
+        String s = "";
+        if(suit == Suit.CLUB || suit == Suit.SPADE)
+            s = Color.ANSI_GREY + face.getFaceString() + " " + suit.getSuitName()+Color.ANSI_RESET;
+        else
+            s = Color.ANSI_RED + face.getFaceString() + " " + suit.getSuitName()+Color.ANSI_RESET;
+        return s;
     }
 
 
     public String toStringWithSymbol() {
-        return (face.getFaceString() + " " + suit.getSuitSymbol());
+        String s = "";
+        if(suit == Suit.CLUB || suit == Suit.SPADE)
+            s = Color.ANSI_GREY + face.getFaceString() + " " + suit.getSuitSymbol()+Color.ANSI_RESET;
+        else
+            s = Color.ANSI_RED + face.getFaceString() + " " + suit.getSuitSymbol()+Color.ANSI_RESET;
+        return s;
     }
 
     @Override
