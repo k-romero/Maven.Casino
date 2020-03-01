@@ -188,11 +188,8 @@ public class GoFish extends CardGame implements GamblingGame {
 
     public static String promptForNextOrEnd(Console c){
         while(true) {
-            try {
-                return c.getStringInputWithoutln("/");
-            }catch (Exception e){
-                c.println("Something went wrong! Please try again.");
-            }
+            String input = c.getStringInputWithoutln("/");
+            return input;
         }
     }
 

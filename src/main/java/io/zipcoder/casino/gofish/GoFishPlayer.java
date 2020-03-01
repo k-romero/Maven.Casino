@@ -5,7 +5,6 @@ import io.zipcoder.casino.tools.Card;
 import io.zipcoder.casino.tools.Face;
 import io.zipcoder.casino.utilities.Console;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 
 import static io.zipcoder.casino.gofish.GoFish.promptForNextOrEnd;
 
@@ -27,7 +26,6 @@ public class GoFishPlayer implements FriendlyPlayer, Comparable<GoFishPlayer> {
     public Boolean askFor(GoFishPlayer they, Face f){
         if(they.getGoFishHand().doesMyHandHave(f)){
             console.println("Apparently "+they.getPlayerData().getName()+" has some "+f.getFaceString()+".");
-            //they.getGoFishHand().displayHands();
             console.println("So "+ they+" handed over "+ they.getGoFishHand().howManyDoIHave(f)+" cards to "+this);
             they.getGoFishHand().giveCardsTo(f, myHand);
             promptForNextOrEnd(console);
@@ -83,12 +81,11 @@ public class GoFishPlayer implements FriendlyPlayer, Comparable<GoFishPlayer> {
             console.println( " > ("+ i +") " + players.get(i) );
         }
         while(true) {
-            try {
-                index = console.getIntegerInputWithoutln("I will select: ");
-                if(index>=players.size()){ throw new Exception(); }
-                break;
-            }catch (Exception e){
+            index = console.getIntegerInputWithoutln("I will select: ");
+            if(index>=players.size()){
                 console.println("Invalid Input! Please try again.");
+            }else{
+                break;
             }
         }
         return players.get(index);
@@ -100,18 +97,17 @@ public class GoFishPlayer implements FriendlyPlayer, Comparable<GoFishPlayer> {
         Face f;
         while(true) {
             fs = this.getGoFishHand().listEveryFaceIHave();
-            for(int i=0; i<fs.size(); i++){
-                console.println( " >  "+ fs.get(i).getFaceString() );
+            for (Face face : fs) {
+                console.println(" >  " + face.getFaceString());
             }
             console.println("-- Please select a rank to ask for --");
-            try {
-                input = console.getStringInputWithoutln("I will select: ");
-                f = Face.toFace(input);
-                if(f == null || !fs.contains(f))
-                    throw new Exception();
-                break;
-            }catch (Exception e){
+            input = console.getStringInputWithoutln("I will select: ");
+            f = Face.toFace(input);
+
+            if(f == null || !fs.contains(f)){
                 console.println("Input not recognized! Try again");
+            }else{
+                break;
             }
         }
         return f;

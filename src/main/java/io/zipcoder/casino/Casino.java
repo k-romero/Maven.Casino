@@ -60,7 +60,7 @@ public class Casino {
                 " ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝╚═╝  ╚═══╝ ╚═════╝ "+ ANSI_RESET ;
 
         c.println("");
-        c.printlnS(logo);
+        c.println(logo);
 
     }
 
@@ -112,18 +112,22 @@ public class Casino {
 
     public static void startHighRollerSession(Player p) {
         HighRoller game = new HighRoller();
+        c.println(ANSI_RED);
         game.start(p);
     }
     public static void startCrapsSession(Player p) {
         Craps game = new Craps();
+        c.println(ANSI_GREEN);
         game.start(p);
     }
     public static void startGoFishSession(Player p){
         GoFish game = new GoFish();
+        c.println(ANSI_BLUE);
         game.start(p);
     }
     public static void startBlackJackSession(Player p){
         BlackJack game = new BlackJack();
+        c.println(ANSI_YELLOW);
         game.start(p);
     }
 }
