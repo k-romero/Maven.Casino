@@ -24,8 +24,16 @@ public class GoFishHandTest {
         myHand.addCardToHand(new Card(Suit.SPADE, Face.NINE ));
         myHand.addCardToHand(new Card(Suit.HEART, Face.FOUR ));
 
-
         Assert.assertTrue(myHand.doesMyHandHave(Face.NINE));
+    }
+
+    @Test
+    public void doesMyHandHaveNOTTest(){
+        GoFishHand myHand = new GoFishHand();
+        myHand.addCardToHand(new Card(Suit.SPADE, Face.SIX ));
+        myHand.addCardToHand(new Card(Suit.HEART, Face.FOUR ));
+
+        Assert.assertFalse(myHand.doesMyHandHave(Face.NINE));
     }
 
     @Test
@@ -85,7 +93,6 @@ public class GoFishHandTest {
         GoFishHand hand1 = new GoFishHand();
         hand1.increaseTally();
         hand1.increaseTally();
-
 
         Assert.assertEquals(2,(int)hand1.getTallyMatches());
     }

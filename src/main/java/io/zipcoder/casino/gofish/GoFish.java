@@ -16,6 +16,7 @@ public class GoFish extends CardGame implements GamblingGame {
     ArrayList<GoFishPlayer> players = new ArrayList<>();
     Deck mainDeck = new Deck();
     Console console = new Console(System.in, System.out);
+
     @Override
     public void start(Player p1) {
         printWelcomeGoFIsh();
@@ -154,20 +155,20 @@ public class GoFish extends CardGame implements GamblingGame {
         return currentP.promptForFace();
     }
 
-    public Card saysGoFish(GoFishPlayer askedPlayer, GoFishPlayer currentPlayer){
+    private Card saysGoFish(GoFishPlayer askedPlayer, GoFishPlayer currentPlayer){
         console.println(askedPlayer+" says GO FISH.");
         promptForNextOrEnd(console);
         return deal(mainDeck, currentPlayer.getGoFishHand());
     }
 
-    public void printFish(GoFishPlayer currentP, Card fish){
+    private void printFish(GoFishPlayer currentP, Card fish){
         console.println(currentP + " draw a card from the pool.");
         currentP.showUserTheFish(fish);
         currentP.showUserTheHand();
         promptForNextOrEnd(console);
     }
 
-    private void showEveryoneNumOfCard(){
+    public void showEveryoneNumOfCard(){
         console.println(Color.ANSI_PURPLE);
         console.println("|============= Current Table =============|");
         String s = "";
@@ -193,7 +194,7 @@ public class GoFish extends CardGame implements GamblingGame {
         }
     }
 
-    public void printAndPromptNext(Console c , String s){
+    private void printAndPromptNext(Console c , String s){
         c.println(s);
         promptForNextOrEnd(c);
     }
