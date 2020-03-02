@@ -49,8 +49,8 @@ public class GoFish extends CardGame implements GamblingGame {
         console.println(goFishImage());
         console.println(line);
         console.println("\nWelcome to Go fish!");
-        console.println("You can end the game by entering bye or end when you choose rank.\n");
-        console.println(line);
+        console.println("You can end the game by entering bye or end when you choose rank.");
+        //console.println(line);
         console.println(Color.ANSI_RESET);
     }
 

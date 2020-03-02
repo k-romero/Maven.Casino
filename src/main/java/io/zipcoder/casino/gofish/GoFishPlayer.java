@@ -53,13 +53,6 @@ public class GoFishPlayer implements FriendlyPlayer, Comparable<GoFishPlayer> {
         player.addPlayerFunds(valueWon);
     }
 
-    public Integer getRanking() {
-        return 0;
-    }
-
-    public Integer getNumberOfWins() {
-        return 0;
-    }
 
     public void showUserTheFish(Card fish){
         console.println("It is a "+fish.toStringWithSymbol());

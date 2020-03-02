@@ -57,8 +57,6 @@ public class Casino {
         c.println(subTitle);
         c.println(logo);
         c.println(line);
-
-
     }
 
     public void printMainMenu(){
@@ -103,7 +101,6 @@ public class Casino {
         info += String.format("|  Craps Wins: %-8s  |\n",p.getNumOfWin(Menu.CRAPS));
         info += String.format("|  Black Jack Wins: %-3s  |\n",p.getNumOfWin(Menu.BLACKJACK));
         info += String.format("|  Number of Fish: %-4s  |",p.getNumOfWin(Menu.GOFISH));
-
 
         c.println("\n"+Color.ANSI_GREEN);
         c.println("|========================|");

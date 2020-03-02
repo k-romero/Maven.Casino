@@ -98,19 +98,6 @@ public class GoFishPlayerTest {
         Assert.assertEquals(2,p.getNumOfWin(Menu.GOFISH));
     }
 
-    @Test
-    public void getRankingTest(){
-        Player p = new Player(10, "Apollo", 100, false);
-        GoFishPlayer apollo = new GoFishPlayer(p);
-        Assert.assertEquals(Integer.valueOf(0),apollo.getRanking());
-    }
-
-    @Test
-    public void getNumOfWinsTest(){
-        Player p = new Player(10, "Apollo", 100, false);
-        GoFishPlayer apollo = new GoFishPlayer(p);
-        Assert.assertEquals(Integer.valueOf(0),apollo.getNumberOfWins());
-    }
 
     @Test
     public void showUserTheHandTest(){
