@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 public class LoginData {
 
     ArrayList<Player> playerDataBase;
+
     public LoginData(){
         playerDataBase = new ArrayList<>();
     }

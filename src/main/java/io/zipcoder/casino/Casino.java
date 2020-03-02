@@ -38,14 +38,9 @@ public class Casino {
     }
 
     public void printLogInInfo(){
-        c.println(Color.ANSI_CYAN);
-        c.println("|=========================|");
-        c.println("|    Log in or Sign Up    |");
-        c.println("|=========================|");
-        c.println("|     > (1) Log In        |");
-        c.println("|     > (2) Sign Up       |");
-        c.println("|=========================|");
-        c.println(Color.ANSI_RESET);
+        String info = "     > (1) Log In        |\n"
+                    +"|     > (2) Sign Up       ";
+        printWindow(Color.ANSI_CYAN,"|","=","    Log in or Sign Up    ", info,true);
     }
 
     public Player startUpUserLogIn(){
@@ -66,12 +61,8 @@ public class Casino {
     }
 
     public static void logInSuccessful(Player p ){
-        c.println(Color.ANSI_GREEN);
-        c.println("|============================|");
-        c.println("|      Login Successful!     |");
-        c.println(String.format("|    Welcome Back! %-9s |",p.getName()));
-        c.println("|============================|");
-        c.println(Color.ANSI_RESET);
+        String center = Console.getPaddedString("Welcome Back! "+p.getName(), ' ',30);
+        printWindow(Color.ANSI_GREEN,"|","=","      Login Successful!      ", center,true);
         c.pressEnterToCount("Press Enter to Go to the Lobby.");
     }
 
@@ -94,29 +85,23 @@ public class Casino {
         players = login.getPlayerDataBase();
     }
 
-    public void printSignUpInfo(){
-        c.println(Color.ANSI_CYAN);
-        c.println("|========================|");
-        c.println("|    Create an Account   |");
-        c.println("|========================|");
-        c.println(Color.ANSI_RESET);
-    }
 
     public void signUpComplete(String name, int id, int balance){
-        c.println(Color.ANSI_GREEN);
-        c.println("|================================|");
-        c.println("|      Registration Complete     |");
-        c.println("|================================|");
+
+
+        String title = "      Registration Complete     ";
+        printWindow(Color.ANSI_GREEN,"|","=",title,null,false);
+        c.print(Color.ANSI_GREEN);
         c.println(String.format("|         Welcome! %-12s  |",name));
         c.println(String.format("|         Your ID is %-10d  |",id));
         c.println(String.format("|  Your initial balance is $%-4d |", balance));
-        c.println("|================================|");
+        c.println(stringOfALine("|","=",title.length()));
         c.println(Color.ANSI_RESET);
         c.pressEnterToCount("Press enter and you will be sent to the casino lobby.");
     }
 
     public Player startSignUpSession(){
-        printSignUpInfo();
+        printWindow(Color.ANSI_CYAN,"|","=","    Create an Account    ",null,true);
         String input = c.getStringInputWithoutln("Enter your name here: ");
         int id = players.size()+1;
         int balance = 100;
@@ -129,7 +114,6 @@ public class Casino {
         }
         signUpComplete(input, id,balance);
         return newPlayer;
-        //return new Player(id, input, 100, false);
     }
 
 
@@ -198,23 +182,17 @@ public class Casino {
 
     public static void showPlayerInfo(Player p) {
         String info = "";
-        info += String.format("|  ID: %-16s  |\n",p.getId());
+        info += String.format("  ID: %-16s  |\n",p.getId());
         info += String.format("|  Name: %-14s  |\n",p.getName());
         info += String.format("|  Balance: $%-10s  |\n",p.getPlayerFunds());
         info += String.format("|  High Roller Wins: %-2s  |\n",p.getNumOfWin(Menu.HIGHROLLER));
         info += String.format("|  Craps Wins: %-8s  |\n",p.getNumOfWin(Menu.CRAPS));
         info += String.format("|  Black Jack Wins: %-3s  |\n",p.getNumOfWin(Menu.BLACKJACK));
-        info += String.format("|  Number of Fish: %-4s  |",p.getNumOfWin(Menu.GOFISH));
+        info += String.format("|  Number of Fish: %-4s  ",p.getNumOfWin(Menu.GOFISH));
 
-        c.println("\n"+Color.ANSI_GREEN);
-        c.println("|========================|");
-        c.println("|    Your Player Info    |");
-        c.println("|========================|");
-        c.println(info);
-        c.println("|========================|");
-        c.println("\n"+Color.ANSI_RESET);
+        printWindow(Color.ANSI_GREEN,"|","=","    Your Player Info    ",info,true);
+
         c.pressEnterToCount("press enter to go back");
-
     }
 
     public static void startHighRollerSession(Player p) {
@@ -232,5 +210,30 @@ public class Casino {
     public static void startBlackJackSession(Player p){
         BlackJack game = new BlackJack();
         game.start(p);
+    }
+
+
+    public static String stringOfALine(String sideSymbol, String lineSymbol, int width){
+        StringBuilder theLine = new StringBuilder(sideSymbol);
+        for (int i = 0; i < width ; i++) {
+            theLine.append(lineSymbol);
+        }
+        theLine.append(sideSymbol);
+        return theLine.toString();
+    }
+
+    public static void printWindow(String color, String sideSymbol, String lineSymbol, String title, String info, Boolean nextLine){
+        c.println(color);
+        c.println(stringOfALine(sideSymbol,lineSymbol,title.length()));
+        c.println(sideSymbol+title+sideSymbol);
+        c.println(stringOfALine(sideSymbol,lineSymbol,title.length()));
+        if( info != null ){
+            c.println(sideSymbol+info+sideSymbol);
+            c.println(stringOfALine(sideSymbol,lineSymbol,title.length()));
+        }
+        if(nextLine){
+            c.println("");
+        }
+        c.print(Color.ANSI_RESET);
     }
 }

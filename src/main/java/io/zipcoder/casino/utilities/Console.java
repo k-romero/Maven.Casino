@@ -72,7 +72,7 @@ public final class Console {
             try {
                 return Integer.parseInt(stringInput);
             } catch (NumberFormatException nfe) {
-                println("Invalid Input! Try again.");
+                println("Invalid Input! Try enter a number.");
             }
         }
     }
@@ -81,6 +81,24 @@ public final class Console {
         getStringInputWithoutln(s);
     }
 
+    public static String getPaddedString(String str, char paddingChar, int max) {
+        if (str == null) {
+            throw new NullPointerException("Can not add padding in null String!");
+        }
+        int maxPadding =max;
+        int length = str.length();
+        int padding = (maxPadding - length) / 2;
+        if (padding <= 0) {
+            return str;
+        }
+        String empty = "", hash = "#";
+        int extra = (length % 2 == 0) ? 1 : 0;
+        String leftPadding = "%" + padding + "s";
+        String rightPadding = "%" + (padding - extra) + "s";
+        String strFormat = leftPadding + "%s" + rightPadding;
+        String formattedString = String.format(strFormat, empty, hash, empty);
 
+        return formattedString.replace(' ', paddingChar).replace(hash, str);
+    }
 }
 

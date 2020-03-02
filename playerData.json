@@ -36,7 +36,7 @@
   "drunk" : false
 }, {
   "id" : 4,
-  "name" : "newman",
+  "name" : "Newman",
   "playerFunds" : 100,
   "drinks" : 0,
   "winnings" : {
@@ -44,6 +44,30 @@
     "CRAPS" : 0,
     "GOFISH" : 0,
     "HIGHROLLER" : 0
+  },
+  "drunk" : false
+}, {
+  "id" : 5,
+  "name" : "Jimmy",
+  "playerFunds" : 100,
+  "drinks" : 0,
+  "winnings" : {
+    "BLACKJACK" : 0,
+    "GOFISH" : 0,
+    "HIGHROLLER" : 0,
+    "CRAPS" : 0
+  },
+  "drunk" : false
+}, {
+  "id" : 6,
+  "name" : "Maya",
+  "playerFunds" : 100,
+  "drinks" : 0,
+  "winnings" : {
+    "GOFISH" : 0,
+    "HIGHROLLER" : 0,
+    "CRAPS" : 0,
+    "BLACKJACK" : 0
   },
   "drunk" : false
 } ]
