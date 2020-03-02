@@ -39,7 +39,6 @@ public class HighRoller extends DiceGame implements GamblingGame{
             evaluateGame(this.currentPlayer);
             playerFundsAvailable();
         }
-
     }
 
     public void playerFundsAvailable(){
@@ -98,7 +97,7 @@ public class HighRoller extends DiceGame implements GamblingGame{
             decision = false;
         } else {
             console.println("Invalid input!");
-            continueGameOrEnd();
+            return continueGameOrEnd();
         }
         return decision;
     }
