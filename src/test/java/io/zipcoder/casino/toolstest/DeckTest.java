@@ -28,6 +28,17 @@ public class DeckTest {
     }
 
     @Test
+    public void takeCardTest(){
+        Deck deck = new Deck();
+        Card taken = deck.takeCard();
+        Card expected = new Card(Suit.DIAMOND, Face.QUEEN);
+        Card actual = deck.peekDeck();
+        Assert.assertEquals(expected.toString(),actual.toString());
+        Assert.assertEquals(new Card(Suit.DIAMOND, Face.KING).toString(),taken.toString());
+
+    }
+
+    @Test
     public void shuffleTest(){
         Deck deck = new Deck();
         String expected = deck.toString();
@@ -54,6 +65,17 @@ public class DeckTest {
         int expected = 52;
         int actual = deck.getDeck().size();
         Assert.assertEquals(expected,actual);
+    }
+
+    @Test
+    public void takeExceptionTest(){
+        Deck deck = new Deck();
+        for (int i = 0; i < 52; i++) {
+            deck.popACard();
+        }
+
+        Card actual = deck.takeCard();
+        Assert.assertNull(actual);
     }
 
 
