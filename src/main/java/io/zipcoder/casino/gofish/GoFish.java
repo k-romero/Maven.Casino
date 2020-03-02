@@ -248,7 +248,8 @@ public class GoFish extends CardGame implements GamblingGame {
             console.println("You won!");
             console.println("You received a pack of Goldfish as reward!");
             console.println(Color.ANSI_RESET);
-            you.getPlayerData().addAFish();
+            you.obtainFish();
+
         }else{
             console.println("You didn't win, try harder!");
         }

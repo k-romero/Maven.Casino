@@ -4,6 +4,8 @@ import io.zipcoder.casino.player.Player;
 import io.zipcoder.casino.tools.Card;
 import io.zipcoder.casino.tools.Face;
 import io.zipcoder.casino.utilities.Console;
+import io.zipcoder.casino.utilities.Menu;
+
 import java.util.ArrayList;
 
 import static io.zipcoder.casino.gofish.GoFish.promptForNextOrEnd;
@@ -40,7 +42,7 @@ public class GoFishPlayer implements FriendlyPlayer, Comparable<GoFishPlayer> {
 
     @Override
     public void obtainFish() {
-        getPlayerData().addAFish();
+        getPlayerData().increaseWinning(Menu.GOFISH);
     }
 
     public void placeBet(int value){

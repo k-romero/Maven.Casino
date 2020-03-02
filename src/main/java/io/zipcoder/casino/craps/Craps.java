@@ -5,6 +5,7 @@ import io.zipcoder.casino.game.GamblingGame;
 import io.zipcoder.casino.highroller.HighRollerPlayer;
 import io.zipcoder.casino.player.Player;
 import io.zipcoder.casino.utilities.Console;
+import io.zipcoder.casino.utilities.Menu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -180,6 +181,7 @@ public class Craps extends DiceGame implements GamblingGame {
     public void winnerWinner(){
         payOutMsg();
         currentPlayer.payOut(player1Bet*2);
+        currentPlayer.getPlayerData().increaseWinning(Menu.CRAPS);
         continueGameOrEnd();
     }
 

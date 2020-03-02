@@ -36,8 +36,8 @@ public class Casino {
         selection.put(Menu.PLAYERINFO, ()-> showPlayerInfo(p));
         selection.put(Menu.HIGHROLLER, ()-> startHighRollerSession(p));
         selection.put(Menu.CRAPS, ()-> startCrapsSession(p));
-        selection.put(Menu.GOFISH, ()-> startGoFishSession(p));
         selection.put(Menu.BLACKJACK, ()-> startBlackJackSession(p));
+        selection.put(Menu.GOFISH, ()-> startGoFishSession(p));
     }
 
 
@@ -99,7 +99,10 @@ public class Casino {
         info += String.format("|  ID: %-16s  |\n",p.getId());
         info += String.format("|  Name: %-14s  |\n",p.getName());
         info += String.format("|  Balance: $%-10s  |\n",p.getPlayerFunds());
-        info += String.format("|  Number of Fish: %-4s  |",p.getNumOfFish());
+        info += String.format("|  High Roller Wins: %-2s  |\n",p.getNumOfWin(Menu.HIGHROLLER));
+        info += String.format("|  Craps Wins: %-8s  |\n",p.getNumOfWin(Menu.CRAPS));
+        info += String.format("|  Black Jack Wins: %-3s  |\n",p.getNumOfWin(Menu.BLACKJACK));
+        info += String.format("|  Number of Fish: %-4s  |",p.getNumOfWin(Menu.GOFISH));
 
 
         c.println("\n"+Color.ANSI_GREEN);

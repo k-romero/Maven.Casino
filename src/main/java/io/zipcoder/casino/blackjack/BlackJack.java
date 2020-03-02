@@ -8,6 +8,7 @@ import io.zipcoder.casino.game.GameControl;
 import io.zipcoder.casino.player.Player;
 import io.zipcoder.casino.tools.Deck;
 import io.zipcoder.casino.utilities.Console;
+import io.zipcoder.casino.utilities.Menu;
 
 public class BlackJack extends CardGame implements GamblingGame, GameControl {
 
@@ -202,6 +203,7 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
 
             String wannaPlayAgain = console.getStringInput("Horayyyyy! Player Won!!!\n  Player new funds: "
                     +blackJackPlayer.getPlayerData().getPlayerFunds() + "\n"  +" wanna play again yes or No?");
+            blackJackPlayer.getPlayerData().increaseWinning(Menu.BLACKJACK);
             if (wannaPlayAgain.equals("yes")){
                 start(blackJackPlayer.player);
             } else if (wannaPlayAgain.equals("no")) {

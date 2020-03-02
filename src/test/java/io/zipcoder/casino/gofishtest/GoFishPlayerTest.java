@@ -7,6 +7,7 @@ import io.zipcoder.casino.tools.Card;
 import io.zipcoder.casino.tools.Face;
 import io.zipcoder.casino.tools.Hand;
 import io.zipcoder.casino.tools.Suit;
+import io.zipcoder.casino.utilities.Menu;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -94,7 +95,7 @@ public class GoFishPlayerTest {
         apollo.obtainFish();
         apollo.obtainFish();
 
-        Assert.assertEquals(2,p.getNumOfFish());
+        Assert.assertEquals(2,p.getNumOfWin(Menu.GOFISH));
     }
 
     @Test
