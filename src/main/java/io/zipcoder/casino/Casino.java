@@ -5,6 +5,7 @@ import io.zipcoder.casino.craps.Craps;
 import io.zipcoder.casino.gofish.GoFish;
 import io.zipcoder.casino.highroller.HighRoller;
 import io.zipcoder.casino.player.Player;
+import io.zipcoder.casino.tools.Color;
 import io.zipcoder.casino.utilities.Console;
 import io.zipcoder.casino.utilities.Menu;
 import java.util.HashMap;
@@ -39,28 +40,24 @@ public class Casino {
         selection.put(Menu.BLACKJACK, ()-> startBlackJackSession(p));
     }
 
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_BLACK = "\u001B[30m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String ANSI_BLUE = "\u001B[34m";
-    public static final String ANSI_PURPLE = "\u001B[35m";
-    public static final String ANSI_CYAN = "\u001B[36m";
-    public static final String ANSI_WHITE = "\u001B[37m";
 
     public void printLogo(){
-        String logo =
-                ANSI_CYAN + "            == Welcome to the ==\n" + ANSI_PURPLE +
-                " ██████╗ █████╗ ███████╗██╗███╗   ██╗ ██████╗ \n" +
-                "██╔════╝██╔══██╗██╔════╝██║████╗  ██║██╔═══██╗\n" +
-                "██║     ███████║███████╗██║██╔██╗ ██║██║   ██║\n" +
-                "██║     ██╔══██║╚════██║██║██║╚██╗██║██║   ██║\n" +
-                "╚██████╗██║  ██║███████║██║██║ ╚████║╚██████╔╝\n" +
-                " ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝╚═╝  ╚═══╝ ╚═════╝ "+ ANSI_RESET ;
+        String line = Color.ANSI_YELLOW+ "◆*．◆*．◆*．◆*．◆*．◆*．◆*．◆*．◆*．◆*．◆*．◆*．◆*．◆*．◆*．◆"+Color.ANSI_RESET;
+        String subTitle = Color.ANSI_DARKYELLOW + "\n                 == Welcome to the ==";
+        String logo = Color.ANSI_YELLOW+
+                "     ██████╗ █████╗ ███████╗██╗███╗   ██╗ ██████╗ \n" +
+                "    ██╔════╝██╔══██╗██╔════╝██║████╗  ██║██╔═══██╗\n" +
+                "    ██║     ███████║███████╗██║██╔██╗ ██║██║   ██║\n" +
+                "    ██║     ██╔══██║╚════██║██║██║╚██╗██║██║   ██║\n" +
+                "    ╚██████╗██║  ██║███████║██║██║ ╚████║╚██████╔╝\n" +
+                "     ╚═════╝╚═╝  ╚═╝╚══════╝╚═╝╚═╝  ╚═══╝ ╚═════╝ \n";
 
         c.println("");
-        c.printlnS(logo);
+        c.println(line);
+        c.println(subTitle);
+        c.println(logo);
+        c.println(line);
+
 
     }
 
@@ -99,13 +96,19 @@ public class Casino {
 
     public static void showPlayerInfo(Player p) {
         String info = "";
-        info += "- Name: "+p.getName()+"\n";
-        info += "- Balance: "+p.getPlayerFunds()+"\n";
-        info += "- Number of Fish: "+p.getNumOfFish()+"\n";
+        info += String.format("|  ID: %-16s  |\n",p.getId());
+        info += String.format("|  Name: %-14s  |\n",p.getName());
+        info += String.format("|  Balance: $%-10s  |\n",p.getPlayerFunds());
+        info += String.format("|  Number of Fish: %-4s  |",p.getNumOfFish());
 
-        c.println("====================\n");
+
+        c.println("\n"+Color.ANSI_GREEN);
+        c.println("|========================|");
+        c.println("|    Your Player Info    |");
+        c.println("|========================|");
         c.println(info);
-        c.println("====================\n");
+        c.println("|========================|");
+        c.println("\n"+Color.ANSI_RESET);
         c.pressEnterToCount();
 
     }

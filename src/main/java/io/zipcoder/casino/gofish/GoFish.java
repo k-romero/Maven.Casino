@@ -1,13 +1,12 @@
 package io.zipcoder.casino.gofish;
-
 import io.zipcoder.casino.game.CardGame;
 import io.zipcoder.casino.game.GamblingGame;
 import io.zipcoder.casino.player.Player;
 import io.zipcoder.casino.tools.Card;
+import io.zipcoder.casino.tools.Color;
 import io.zipcoder.casino.tools.Deck;
 import io.zipcoder.casino.tools.Face;
 import io.zipcoder.casino.utilities.Console;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
@@ -44,8 +43,15 @@ public class GoFish extends CardGame implements GamblingGame {
     }
 
     private void printWelcomeGoFIsh() {
+        String line = "☆¤·.¸¸.·´¯`·.¸¸.¤☆๑ ><> ๑☆¤·.¸¸.·´¯`·.¸¸.¤☆☆¤·.¸¸.·´¯`·.¸¸.¤☆๑ ><> ๑☆¤·.¸¸.·´¯`·.¸¸.¤☆";
+        console.print(Color.ANSI_BLUE);
+        console.println(line);
         console.println(goFishImage());
-        console.println("Welcome to Go fish!");
+        console.println(line);
+        console.println("\nWelcome to Go fish!");
+        console.println("You can end the game by entering bye or end when you choose rank.\n");
+        console.println(line);
+        console.println(Color.ANSI_RESET);
     }
 
     private Integer getNumOfNPC(Player p){
@@ -65,10 +71,23 @@ public class GoFish extends CardGame implements GamblingGame {
         return players.get(currentIndex);
     }
 
-    private void addNPCtoPlayerList(int numOfNPC){
+    public void addNPCtoPlayerList(int numOfNPC){
+        ArrayList<String> names = setUpNPCName();
+        Collections.shuffle(names);
         for(int i=1; i<=numOfNPC; i++) {
-            players.add(new GoFishNPC(new Player(-1,"NPC"+i,0,false)));
+            players.add(new GoFishNPC(new Player(-1, names.get(i),0,false)));
         }
+    }
+
+    public ArrayList<String> setUpNPCName(){
+        ArrayList<String> names = new ArrayList<>();
+        names.add("Kevin");
+        names.add("Destiny");
+        names.add("Moe");
+        names.add("Corey");
+        names.add("Ujjwal");
+        names.add("Leila");
+        return names;
     }
 
     public int getStartingCard(int numOfNPC){
@@ -89,46 +108,25 @@ public class GoFish extends CardGame implements GamblingGame {
     }
 
     private Boolean continueTurn(GoFishPlayer currentP){
-
         showEveryoneNumOfCard();
-
-        if(currentP.getGoFishHand().getNumOfCards() == 0){
-            console.println(currentP+" has no cards on hand.");
-            return false;
-        }
-
+        if(hasNoCardOnHand(currentP)) return false;
         Face face = check4(currentP.getGoFishHand());
-
         if(face != null){
             printFind4Msg(currentP,face);
-            if(currentP.getGoFishHand().getNumOfCards()==0){
-                console.println(currentP+" has no cards on hand.");
-                return false;
-            }
+            if(hasNoCardOnHand(currentP)) return false;
         }
-
         face = askForFace(currentP);
-
+        if(face == null) return false;
         GoFishPlayer askedPlayer = currentP.promptForPlayer(players);
-        console.println(currentP+" is asking "+askedPlayer+": Do you have any "+ face.getFaceString()+"?");
-        promptForNextOrEnd(console);
-
+        printAndPromptNext(console, currentP+" is asking "+askedPlayer+": Do you have any "+ face.getFaceString()+"?");
         if(currentP.askFor(askedPlayer, face)){
-            currentP.showUserTheHand();
             return continueTurn(currentP);
         }else{
-
             Card fish = saysGoFish( askedPlayer, currentP);
-
             if(fish != null) {
-                console.println(currentP + " draw a card from the pool.");
-                currentP.showUserTheFish(fish);
-                currentP.showUserTheHand();
-                promptForNextOrEnd(console);
-
+                printFish(currentP,fish);
                 if(fish.getFace().equals(face)){
-                    console.println(currentP + " drew a " +face.getFaceString()+"! "+currentP+" can now ask again!");
-                    promptForNextOrEnd(console);
+                    printAndPromptNext(console, currentP + " drew a " +face.getFaceString()+"! "+currentP+" can now ask again!");
                     return continueTurn(currentP);
                 }else{
                     if(check4(currentP.getGoFishHand()) != null)
@@ -157,18 +155,28 @@ public class GoFish extends CardGame implements GamblingGame {
         return currentP.promptForFace();
     }
 
-    public Card saysGoFish(GoFishPlayer askedPlayer, GoFishPlayer currentPlayer){
+    private Card saysGoFish(GoFishPlayer askedPlayer, GoFishPlayer currentPlayer){
         console.println(askedPlayer+" says GO FISH.");
         promptForNextOrEnd(console);
         return deal(mainDeck, currentPlayer.getGoFishHand());
     }
 
-    private void showEveryoneNumOfCard(){
-        console.println("=====Current Table=====");
+    private void printFish(GoFishPlayer currentP, Card fish){
+        console.println(currentP + " draw a card from the pool.");
+        currentP.showUserTheFish(fish);
+        currentP.showUserTheHand();
+        promptForNextOrEnd(console);
+    }
+
+    public void showEveryoneNumOfCard(){
+        console.println(Color.ANSI_PURPLE);
+        console.println("|============= Current Table =============|");
+        String s = "";
         for(GoFishPlayer gp :players){
-            console.println(gp+" has "+gp.getGoFishHand().getNumOfCards()+ " cards, Matched sets:" + gp.getGoFishHand().getTallyMatches());
+            console.println(String.format("|%9s has %2d cards. Matched Sets: %d  |",gp,gp.getGoFishHand().getNumOfCards(),gp.getGoFishHand().getTallyMatches()));
         }
-        console.println("=======================");
+        console.println("|=========================================|");
+        console.println(Color.ANSI_RESET);
 
     }
 
@@ -186,18 +194,27 @@ public class GoFish extends CardGame implements GamblingGame {
         }
     }
 
+    private void printAndPromptNext(Console c , String s){
+        c.println(s);
+        promptForNextOrEnd(c);
+    }
+
     public static String promptForNextOrEnd(Console c){
         while(true) {
-            try {
-                return c.getStringInputWithoutln("/");
-            }catch (Exception e){
-                c.println("Something went wrong! Please try again.");
-            }
+            //if(input.equals("bye") || input.equals("end"))
+            return c.getStringInputWithoutln(".");
         }
     }
 
-    public Face check4(GoFishHand hand){
+    public Boolean hasNoCardOnHand(GoFishPlayer currentP){
+        if(currentP.getGoFishHand().getNumOfCards()==0){
+            console.println(currentP+" has no cards on hand.");
+            return true;
+        }
+        return false;
+    }
 
+    public Face check4(GoFishHand hand){
         for(Face f: Face.values()){
             if(hand.howManyDoIHave(f)==4){
                 return f;
@@ -218,25 +235,29 @@ public class GoFish extends CardGame implements GamblingGame {
         ArrayList<GoFishPlayer> tempP = new ArrayList<>(players);
         Collections.sort(tempP);
 
-        console.println("== RESULT ==");
-        for (GoFishPlayer p :tempP) {
-            console.println(p + "   " + p.getGoFishHand().getTallyMatches());
-        }
+        console.println(Color.ANSI_CYAN);
+        console.println("|== Total Score ==|");
+        for (GoFishPlayer p :tempP)
+            console.println(String.format("| %8s:  %d    |",p,p.getGoFishHand().getTallyMatches()));
+        console.println("|=================|");
+        console.println(Color.ANSI_RESET);
 
         if(tempP.get(0).equals(you) &&
                 tempP.get(1).getGoFishHand().getTallyMatches() < you.getGoFishHand().getTallyMatches()){
+            console.println(Color.ANSI_YELLOW);
             console.println("You won!");
             console.println("You received a pack of Goldfish as reward!");
+            console.println(Color.ANSI_RESET);
             you.getPlayerData().addAFish();
         }else{
-            console.println("Too bad... you lost, try harder!");
+            console.println("You didn't win, try harder!");
         }
         console.println("You will be sent back to the lobby, come back next time!");
         promptForNextOrEnd(console);
     }
 
     public String goFishImage(){
-        String result =
+        String result = "\n"+
                 "                              .######....#######..########.####..######..##.....##\n" +
                 "  o        /`·. ¸          .##....##..##.....##.##........##..##....##.##.....##\n" +
                 " .        /¸...¸`:·        .##........##.....##.##........##..##.......##.....##\n" +

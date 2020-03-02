@@ -11,6 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class GoFishNPC extends GoFishPlayer {
     Player p;
     Console console = new Console(System.in, System.out);
+
     public GoFishNPC(Player player) {
         super(player);
         p = player;
@@ -22,7 +23,6 @@ public class GoFishNPC extends GoFishPlayer {
 
     @Override
     public void showUserTheHand(){
-
     }
 
     @Override
