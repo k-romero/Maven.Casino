@@ -48,8 +48,28 @@ public class HandTest {
         Assert.assertEquals("Club",c.getSuit().getSuitName());
         testHand.displayHands();
     }
+
     @Test
-    public void displayHands(){
+    public void removeCardFailTest(){
+        Hand testHand = new Hand(){};
+        testHand.addCardToHand(new Card(Suit.CLUB, Face.EIGHT));
+        testHand.addCardToHand(new Card(Suit.CLUB, Face.NINE));
+
+        Card c = testHand.removeCard(Suit.HEART, Face.EIGHT);
+
+        Assert.assertNull(c);
+    }
+
+
+    @Test
+    public void removeCardFailTest2(){
+        Hand testHand = new Hand(){};
+        Card c = testHand.removeCard(Suit.CLUB, Face.EIGHT);
+        Assert.assertNull(c);
+    }
+
+    @Test
+    public void displayHandsTest(){
         Hand testHand = new Hand(){};
         Card testCard = new Card(Suit.CLUB, Face.EIGHT );
         Card testCard1 = new Card(Suit.SPADE, Face.ACE );
@@ -57,6 +77,17 @@ public class HandTest {
         testHand.addCardToHand(testCard1);
 
         testHand.displayHands();
+    }
+
+    @Test
+    public void displayHandsWithSymbolTest(){
+        Hand testHand = new Hand(){};
+        Card testCard = new Card(Suit.HEART, Face.EIGHT );
+        Card testCard1 = new Card(Suit.DIAMOND, Face.ACE );
+        testHand.addCardToHand(testCard);
+        testHand.addCardToHand(testCard1);
+
+        testHand.displayHandsWithSymbol();
 
     }
 }

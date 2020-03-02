@@ -83,14 +83,21 @@ public class CardTest {
         Assert.assertEquals(11, f.getAltValue());
     }
 
-
     @Test
     public void stringToFaceTest(){
         Assert.assertEquals(Face.KING,Face.toFace("king"));
         Assert.assertEquals(Face.KING,Face.toFace("k"));
         Assert.assertEquals(Face.TWO,Face.toFace("2"));
         Assert.assertEquals(Face.TWO,Face.toFace("TwO"));
-
     }
+
+    @Test
+    public void stringToFaceFailTest(){
+        Assert.assertNull(Face.toFace("asdljasld"));
+        Assert.assertNull(Face.toFace("kinggg"));
+        Assert.assertNull(Face.toFace("qwween"));
+        Assert.assertNull(Face.toFace("222"));
+    }
+
 
 }
