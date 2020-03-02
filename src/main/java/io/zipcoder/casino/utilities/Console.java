@@ -77,8 +77,8 @@ public final class Console {
         }
     }
 
-    public void pressEnterToCount(){
-        getStringInputWithoutln("press enter to continue");
+    public void pressEnterToCount(String s){
+        getStringInputWithoutln(s);
     }
 
 

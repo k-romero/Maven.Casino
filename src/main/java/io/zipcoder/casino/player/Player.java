@@ -13,11 +13,10 @@ public class Player {
     private int drinks = 0;
     private Map<Menu,Integer> winnings;
 
+    public Player(){};
+
     public Player(String name){
-        this.name = name;
-        id = -1;
-        playerFunds = 1000;
-        isDrunk = false;
+        this(0,name,1000,false);
     }
 
     public Player(int id, String name, int playerFunds, boolean isDrunk) {
@@ -27,10 +26,18 @@ public class Player {
         this.isDrunk = isDrunk;
         this.winnings = new HashMap<>();
 
-        winnings.put(Menu.HIGHROLLER,0);
-        winnings.put(Menu.CRAPS,0);
-        winnings.put(Menu.GOFISH,0);
-        winnings.put(Menu.BLACKJACK,0);
+        for (int i = 1; i < Menu.values().length; i++) {
+            winnings.put(Menu.values()[i], 0);
+        }
+
+    }
+
+    public Player(int id, String name, int playerFunds, boolean isDrunk, Map<Menu,Integer> winnings) {
+        this(id, name, playerFunds, isDrunk);
+        for (int i = 1; i < Menu.values().length; i++) {
+            this.winnings.put(Menu.values()[i], winnings.get(Menu.values()[i]));
+        }
+
     }
 
     public int getId() {

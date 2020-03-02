@@ -7,7 +7,11 @@ import io.zipcoder.casino.highroller.HighRoller;
 import io.zipcoder.casino.player.Player;
 import io.zipcoder.casino.tools.Color;
 import io.zipcoder.casino.utilities.Console;
+import io.zipcoder.casino.utilities.LoginData;
 import io.zipcoder.casino.utilities.Menu;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,22 +19,119 @@ public class Casino {
 
     public static Console c = new Console(System.in, System.out);
     public static Map<Menu, Runnable> selection = new HashMap<>();
+    public static LoginData login = new LoginData();
+    public static ArrayList<Player> players = new ArrayList<>();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+
         Casino casino = new Casino();
-
-        //======================================
-        // This is a temporary set up!!!!!!!!!!!
-        // This can bypass the login/enter-name session
-        // login session is still under construction
-            Player p1 = new Player(10, "JJ",1000,true );
-            casino.setUpSelection(p1);
-            casino.printLogo();
-            casino.printMainMenu();
-            casino.run(p1);
-        //======================================
+        casino.loadPlayerDataBase();
+        Player p1 = null;
+        while(p1 == null) {
+            p1 = casino.startUpUserLogIn();
+        }
+        casino.setUpSelection(p1);
+        casino.printLogo();
+        casino.printMainMenu();
+        casino.run(p1);
 
     }
+
+    public void printLogInInfo(){
+        c.println(Color.ANSI_CYAN);
+        c.println("|=========================|");
+        c.println("|    Log in or Sign Up    |");
+        c.println("|=========================|");
+        c.println("|     > (1) Log In        |");
+        c.println("|     > (2) Sign Up       |");
+        c.println("|=========================|");
+        c.println(Color.ANSI_RESET);
+    }
+
+    public Player startUpUserLogIn(){
+        printLogInInfo();
+        Player p;
+        while(true) {
+            int choice = c.getIntegerInputWithoutln("I would like to... ");
+            if (choice == 1) {
+                p = startSignInSession();
+                return p;
+            } else if (choice == 2) {
+                p = startSignUpSession();
+                return p;
+            } else {
+                c.println(Color.ANSI_RED+"Input invalid!"+Color.ANSI_RESET);
+            }
+        }
+    }
+
+    public static void logInSuccessful(Player p ){
+        c.println(Color.ANSI_GREEN);
+        c.println("|============================|");
+        c.println("|      Login Successful!     |");
+        c.println(String.format("|    Welcome Back! %-9s |",p.getName()));
+        c.println("|============================|");
+        c.println(Color.ANSI_RESET);
+        c.pressEnterToCount("Press Enter to Go to the Lobby.");
+    }
+
+    public Player startSignInSession(){
+        while(true) {
+            int id = c.getIntegerInputWithoutln("Enter your ID: ");
+            for (Player p : players) {
+                if (p.getId() == id) {
+                    logInSuccessful(p);
+                    return p;
+                }
+            }
+            c.println(Color.ANSI_RED+"Such id does not exist in the system! Try again."+Color.ANSI_RESET);
+            return null;
+        }
+    }
+
+    public void loadPlayerDataBase() throws IOException {
+        login.jsonLoadData();
+        players = login.getPlayerDataBase();
+    }
+
+    public void printSignUpInfo(){
+        c.println(Color.ANSI_CYAN);
+        c.println("|========================|");
+        c.println("|    Create an Account   |");
+        c.println("|========================|");
+        c.println(Color.ANSI_RESET);
+    }
+
+    public void signUpComplete(String name, int id, int balance){
+        c.println(Color.ANSI_GREEN);
+        c.println("|================================|");
+        c.println("|      Registration Complete     |");
+        c.println("|================================|");
+        c.println(String.format("|         Welcome! %-12s  |",name));
+        c.println(String.format("|         Your ID is %-10d  |",id));
+        c.println(String.format("|  Your initial balance is $%-4d |", balance));
+        c.println("|================================|");
+        c.println(Color.ANSI_RESET);
+        c.pressEnterToCount("Press enter and you will be sent to the casino lobby.");
+    }
+
+    public Player startSignUpSession(){
+        printSignUpInfo();
+        String input = c.getStringInputWithoutln("Enter your name here: ");
+        int id = players.size()+1;
+        int balance = 100;
+        Player newPlayer = new Player(id, input, balance,false);
+        login.addPlayerData(newPlayer);
+        try {
+            login.jsonWrite();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        signUpComplete(input, id,balance);
+        return newPlayer;
+        //return new Player(id, input, 100, false);
+    }
+
 
     public void setUpSelection(Player p){
         selection.put(Menu.PLAYERINFO, ()-> showPlayerInfo(p));
@@ -68,7 +169,7 @@ public class Casino {
         c.println(menuString);
     }
 
-    public void run(Player p ){
+    public void run(Player p ) throws IOException {
         String input = "";
         while(true) {
                 input = c.getStringInputWithoutln("Enter Your selection: ");
@@ -79,6 +180,9 @@ public class Casino {
                     selection.get(m).run();
                     printLogo();
                     printMainMenu();
+                    login.updatePlayerData(p);
+                    login.jsonWrite();
+                    c.println(Color.ANSI_GREEN+"Your progress is saved."+Color.ANSI_RESET);
                 }
         }
     }
@@ -109,7 +213,7 @@ public class Casino {
         c.println(info);
         c.println("|========================|");
         c.println("\n"+Color.ANSI_RESET);
-        c.pressEnterToCount();
+        c.pressEnterToCount("press enter to go back");
 
     }
 
