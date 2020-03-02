@@ -4,6 +4,7 @@ import io.zipcoder.casino.game.DiceGame;
 import io.zipcoder.casino.game.GamblingGame;
 import io.zipcoder.casino.player.Player;
 import io.zipcoder.casino.utilities.Console;
+import io.zipcoder.casino.utilities.Menu;
 
 
 public class HighRoller extends DiceGame implements GamblingGame{
@@ -41,6 +42,7 @@ public class HighRoller extends DiceGame implements GamblingGame{
             } else if(playerCurrentlyPlayingTheGame.getDiceValue() > displayDealerRoll()){
                 console.println("You win! " + (player1Bet * 2) + " has been added to your account!");
                 playerCurrentlyPlayingTheGame.payOut(player1Bet * 2);
+                playerCurrentlyPlayingTheGame.getPlayerData().increaseWinning(Menu.HIGHROLLER);
             } else {
                 console.println("You lost " + player1Bet + "! Better luck next time :(");
             }
