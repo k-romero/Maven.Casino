@@ -37,4 +37,10 @@ public class CasinoTest {
         casino.printLogo();
     }
 
+    @Test
+    public void printLineTest(){
+        Casino c = new Casino();
+        Assert.assertEquals("/-----/",c.stringOfALine("/","-",5));
+
+    }
 }
