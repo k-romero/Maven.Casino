@@ -71,7 +71,7 @@ public class GoFish extends CardGame implements GamblingGame {
         return players.get(currentIndex);
     }
 
-    private void addNPCtoPlayerList(int numOfNPC){
+    public void addNPCtoPlayerList(int numOfNPC){
         ArrayList<String> names = setUpNPCName();
         Collections.shuffle(names);
         for(int i=1; i<=numOfNPC; i++) {
@@ -215,7 +215,6 @@ public class GoFish extends CardGame implements GamblingGame {
     }
 
     public Face check4(GoFishHand hand){
-
         for(Face f: Face.values()){
             if(hand.howManyDoIHave(f)==4){
                 return f;
