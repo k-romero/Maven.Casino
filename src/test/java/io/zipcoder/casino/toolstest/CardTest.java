@@ -71,4 +71,26 @@ public class CardTest {
         Assert.assertTrue(c1.compareTo(c2)>0);
     }
 
+    @Test
+    public void faceGetNameStringTest(){
+        Face f = Face.QUEEN;
+        Assert.assertEquals("QUEEN", f.getNameString());
+    }
+
+    @Test
+    public void getAltValueTest(){
+        Face f = Face.ACE;
+        Assert.assertEquals(11, f.getAltValue());
+    }
+
+
+    @Test
+    public void stringToFaceTest(){
+        Assert.assertEquals(Face.KING,Face.toFace("king"));
+        Assert.assertEquals(Face.KING,Face.toFace("k"));
+        Assert.assertEquals(Face.TWO,Face.toFace("2"));
+        Assert.assertEquals(Face.TWO,Face.toFace("TwO"));
+
+    }
+
 }

@@ -38,6 +38,7 @@ public class Deck {
     public Stack<Card> getDeck(){
         return deck;
     }
+
     public Card takeCard(){
         try {
             return popACard();
