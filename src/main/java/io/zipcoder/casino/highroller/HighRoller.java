@@ -22,10 +22,10 @@ public class HighRoller extends DiceGame implements GamblingGame{
 
         HighRollerPlayer playerCurrentlyPlayingTheGame = new HighRollerPlayer(p1);
         this.currentPlayer = playerCurrentlyPlayingTheGame;
-
         gameInSession = true;
         console.println(highRollerImage());
         console.println(highRollerText());
+
         while(gameInSession){
             console.println("HighRoller coming in!");
             bet();
@@ -36,24 +36,19 @@ public class HighRoller extends DiceGame implements GamblingGame{
             promptToContinue();
             dealerRollsDice();
             console.println("The dealer rolled a " + displayDealerRoll() + "!");
-            if(playerCurrentlyPlayingTheGame.getDiceValue() == displayDealerRoll()){
-                console.println("You tied the dealer! You get back your initial bet of " + player1Bet + "!");
-                playerCurrentlyPlayingTheGame.payOut(player1Bet);
-            } else if(playerCurrentlyPlayingTheGame.getDiceValue() > displayDealerRoll()){
-                console.println("You win! " + (player1Bet * 2) + " has been added to your account!");
-                playerCurrentlyPlayingTheGame.payOut(player1Bet * 2);
-                playerCurrentlyPlayingTheGame.getPlayerData().increaseWinning(Menu.HIGHROLLER);
-            } else {
-                console.println("You lost " + player1Bet + "! Better luck next time :(");
-            }
-            if(currentPlayer.getPlayerData().getPlayerFunds() == 0){
-                console.println("SECURITY! Get this guy out of here!");
-                this.gameInSession = false;
-            }else {
-                this.gameInSession = continueGameOrEnd();
-            }
+            evaluateGame(this.currentPlayer);
+            playerFundsAvailable();
         }
 
+    }
+
+    public void playerFundsAvailable(){
+        if(currentPlayer.getPlayerData().getPlayerFunds() == 0){
+            console.println("SECURITY! Get this guy out of here!");
+            this.gameInSession = false;
+        }else {
+            this.gameInSession = continueGameOrEnd();
+        }
     }
 
     public void end(Player p1) {
@@ -71,7 +66,11 @@ public class HighRoller extends DiceGame implements GamblingGame{
         }else if (currentPlayer.getPlayerData().getPlayerFunds() < bet){
             console.println("You don't have enough money to place that bet!\nYou have " + currentPlayer.getPlayerData().getPlayerFunds() + " in your account.");
             bet();
-        } else {
+        }else if(bet == 0){
+            console.println("We are not play for fun here. You must bet more than $0!");
+            bet();
+        }
+        else {
             player1Bet = bet;
             console.println("High Roller is betting " + player1Bet + ".");
         }
@@ -102,6 +101,19 @@ public class HighRoller extends DiceGame implements GamblingGame{
             continueGameOrEnd();
         }
         return decision;
+    }
+
+    public void evaluateGame(HighRollerPlayer playerCurrentlyPlayingTheGame){
+        if(playerCurrentlyPlayingTheGame.getDiceValue() == displayDealerRoll()){
+            console.println("You tied the dealer! You get back your initial bet of " + player1Bet + "!");
+            playerCurrentlyPlayingTheGame.payOut(player1Bet);
+        } else if(playerCurrentlyPlayingTheGame.getDiceValue() > displayDealerRoll()){
+            console.println("You win! $" + (player1Bet * 2) + " has been added to your account!");
+            playerCurrentlyPlayingTheGame.payOut(player1Bet * 2);
+            playerCurrentlyPlayingTheGame.getPlayerData().increaseWinning(Menu.HIGHROLLER);
+        } else {
+            console.println("You lost $" + player1Bet + "! Better luck next time :(");
+        }
     }
 
     public String highRollerImage(){
