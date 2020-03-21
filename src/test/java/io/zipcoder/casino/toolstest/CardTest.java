@@ -79,8 +79,8 @@ public class CardTest {
 
     @Test
     public void getAltValueTest(){
-        Face f = Face.ACE;
-        Assert.assertEquals(11, f.getAltValue());
+        Face f = Face.QUEEN;
+        Assert.assertEquals(10, f.getAltValue());
     }
 
     @Test
