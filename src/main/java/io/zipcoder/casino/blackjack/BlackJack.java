@@ -10,7 +10,7 @@ import io.zipcoder.casino.tools.Deck;
 import io.zipcoder.casino.utilities.Console;
 import io.zipcoder.casino.utilities.Menu;
 
-import java.util.InputMismatchException;
+
 
 public class BlackJack extends CardGame implements GamblingGame, GameControl {
 
@@ -28,7 +28,7 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
     boolean gameInProgress=true;
     boolean gameFinished =false;
 
-    // TODO: FIX LOGIC ABSTRACT CODE
+
     @Override
     public void start(Player player) {
         this.blackJackPlayer = new BlackJackPlayer(player);
@@ -37,19 +37,19 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
             playerHand.getCardsOnHand().clear();
             dealerHand.getCardsOnHand().clear();
             console.print(blackJackImage());
-            console.println("Welcome to Black Jack");
+            console.println("Welcome to Black Jack....");
             placeBet();
             blackJackPlayer.getPlayerData().reducePlayerFunds(betPlaced);
-            console.println( "Your new balance is: $"+ blackJackPlayer.getPlayerData().getPlayerFunds());
+            console.println( "your new balance is: "+ blackJackPlayer.getPlayerData().getPlayerFunds());
             deck.shuffleDeck();
-            dealFirstHandOfBlackJack();
-            promptPlayerAction(playerHand);
-            playerValue = playerHand.calculateHand(playerHand);
+            dealFirstSetOfBlackJet();
+            playPlayerHand(playerHand);
+            playerValue= playerHand.calculateCards(playerHand);
             if (checkIfBust(playerValue)){
                 playDealerHand(dealerHand);
-                console.println("this is the value for dealer:  "+ String.valueOf(dealerValue));
+                console.println("this is the value for dealer:  "+String.valueOf(dealerValue));
                 dealerHand.displayHands();
-                console.println("this is the value for player:  "+ String.valueOf(playerValue));
+                console.println("this is the value for player:  "+String.valueOf(playerValue));
                 playerHand.displayHands();
                 String wannaPlayAgain = console.getStringInput("You bust! wanna play again yes or No?");
                 if (wannaPlayAgain.equals("yes")){
@@ -61,7 +61,7 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
             }
 
             playDealerHand(dealerHand);
-            dealerValue=dealerHand.calculateHand(dealerHand);
+            dealerValue=dealerHand.calculateCards(dealerHand);
             if (checkIfBust(dealerValue)){
                 playDealerHand(dealerHand);
                 console.println("this is the value for dealer:  "+String.valueOf(dealerValue));
@@ -78,73 +78,86 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
                 }
 
             }
-            displayGameWinner();
+            console.println("this is the value for dealer:  "+String.valueOf(dealerValue));
+            dealerHand.displayHands();
+            console.println("this is the value for player:  "+String.valueOf(playerValue));
+            playerHand.displayHands();
+            determineWin(playerValue,dealerValue);
         }
 
 
     }
+
+
+
+
+
+
 
 
     public void placeBet() {
 
-        Integer bet = console.getIntegerInput("Place your bet!");
-        if (bet < 0){
-            console.println("No negatives!\nYou have " + blackJackPlayer.getPlayerData().getPlayerFunds() + " in your account.");
+        betPlaced = console.getIntegerInput("Place a bet in order to play");
+        int playerFunds = blackJackPlayer.getPlayerData().getPlayerFunds();
+        if (playerFunds < betPlaced) {
+            console.println("Sorry you do not have enough funds!");
             placeBet();
-        }else if (blackJackPlayer.getPlayerData().getPlayerFunds() < bet){
-            console.println("You don't have enough money to place that bet!\nYou have " + blackJackPlayer.getPlayerData().getPlayerFunds() + " in your account.");
+        } else if (betPlaced < 0) {
+            console.println("PLEASE DONT GIVE ME NEGATIVE MONEY!");
             placeBet();
-        }else if(bet == 0){
-            console.println("We are not play for fun here. You must bet more than $0!");
-            placeBet();
-        }
-        else {
-            betPlaced = bet;
-            console.println(blackJackPlayer.getPlayerData().getName() + "bet $" + bet + ".");
+
+        } else {
+
+            console.println(" you have placed a bet in the amount of:  " + betPlaced);
+
         }
 
     }
 
-    public void dealFirstHandOfBlackJack(){
+    public void dealFirstSetOfBlackJet (){
 
         console.println("PlayerCard:");
         CardGame.deal(deck, playerHand);
-        CardGame.deal(deck, dealerHand);
         CardGame.deal(deck, playerHand);
-        playerHand.displayHandsWithSymbol();
-        console.println("DealerCard:");
-        dealerHand.displayHandsWithSymbol();
-        CardGame.deal(deck,dealerHand);
-        dealerValue = dealerHand.calculateHand(dealerHand);
-        playerValue = playerHand.calculateHand(playerHand);
+        playerHand.displayHands();
 
+        CardGame.deal(deck, dealerHand);
+        console.println("DealerCard:");
+        dealerHand.displayHands();
+        CardGame.deal(deck,dealerHand);
+        dealerValue=dealerHand.calculateCards(dealerHand);
+        playerValue =playerHand.calculateCards(playerHand);
     }
 
-    public void promptPlayerAction(BlackJackHand playerHand){
-        int userInput = this.console.getIntegerInput("To STAND press --> 1\nTo HIT press --> 2");
-        if (playerValue <= 21 && userInput == 2) {
+    public void playPlayerHand( BlackJackHand playerHand ) {
+        int userInput = this.console.getIntegerInput("Would you like to hit press (1) or stand press (2)");
+        if (playerValue <= 21 && userInput == 1) {
             hit(playerHand);
-        } else if (userInput == 1) {
+        } else if (userInput == 2) {
             stand(playerHand);
-        }
-        checkIfBust(playerValue);
+        } checkIfBust(playerValue);
     }
 
     public boolean checkIfBust(int value){
-        return value > 21;
+        if ((playerValue >21)||((dealerValue>21))) {
+            return true;
+        }else
+            return false;
     }
 
 
-    public void playDealerHand (BlackJackHand dealerHand) {
+    public  void playDealerHand (BlackJackHand dealerHand) {
         while (dealerValue < 17) {
-            hit(dealerHand);
-        }
-        checkIfBust(dealerValue);
+            if ((dealerValue > 17) && (dealerValue<21)){
+                stand(dealerHand);
+            } else
+                hit(dealerHand);
+        } checkIfBust(dealerValue);
     }
 
 
 
-    public boolean stand(BlackJackHand hand){
+    public boolean  stand ( BlackJackHand hand){
         if (hand.equals(dealerHand)) {
 
             return true;
@@ -156,16 +169,20 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
 
         } return false;
     }
-
     public void hit(BlackJackHand hand) {
         if (hand.equals(playerHand)){
             CardGame.deal(deck,playerHand);
-            playerValue=playerHand.calculateHand(playerHand);
+            playerValue=playerHand.calculateCards(playerHand);
         } else if (hand.equals(dealerHand)){
             CardGame.deal(deck,dealerHand);
-            dealerValue=dealerHand.calculateHand(dealerHand);
+            dealerValue=dealerHand.calculateCards(dealerHand);
         }
+
+
     }
+
+
+    // 1 is to hit 2 is to stand
 
 
 
@@ -211,17 +228,9 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
             return -1;
         }
         return -1;
+
+
     }
-
-    public void displayGameWinner(){
-        console.println("Player total is: "+String.valueOf(playerValue));
-        playerHand.displayHandsWithSymbol();
-        console.println("Dealer total is:  "+String.valueOf(dealerValue));
-        dealerHand.displayHandsWithSymbol();
-        determineWin(playerValue,dealerValue);
-    }
-
-
     public String blackJackImage (){
         String result="\n" +
                 "  ____    _                  _            _                  _      \n" +
