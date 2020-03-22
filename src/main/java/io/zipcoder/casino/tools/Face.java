@@ -2,7 +2,7 @@ package io.zipcoder.casino.tools;
 
 public enum Face {
 
-    ACE("A",1, 11, "ACE"),
+    ACE("A",1, 1, "ACE"),
     TWO("2",2, 2, "TWO"),
     THREE("3",3, 3, "THREE"),
     FOUR("4",4, 4, "FOUR"),
@@ -12,9 +12,9 @@ public enum Face {
     EIGHT("8",8, 8, "EIGHT"),
     NINE("9",9, 9, "NINE"),
     TEN("10", 10, 10, "TEN"),
-    JACK("J", 11, 11, "JACK"),
-    QUEEN("Q", 12, 12, "QUEEN"),
-    KING("K", 13, 13, "KING");
+    JACK("J", 11, 10, "JACK"),
+    QUEEN("Q", 12, 10, "QUEEN"),
+    KING("K", 13, 10, "KING");
 
     String faceString;
     int value;

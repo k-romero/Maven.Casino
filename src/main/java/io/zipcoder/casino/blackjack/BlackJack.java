@@ -10,6 +10,8 @@ import io.zipcoder.casino.tools.Deck;
 import io.zipcoder.casino.utilities.Console;
 import io.zipcoder.casino.utilities.Menu;
 
+
+
 public class BlackJack extends CardGame implements GamblingGame, GameControl {
 
     BlackJackPlayer blackJackPlayer;
@@ -38,6 +40,8 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
             console.println("Welcome to Black Jack....");
             placeBet();
             blackJackPlayer.getPlayerData().reducePlayerFunds(betPlaced);
+
+
             console.println( "your new balance is: "+ blackJackPlayer.getPlayerData().getPlayerFunds());
             deck.shuffleDeck();
             dealFirstSetOfBlackJet();
@@ -99,7 +103,7 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
         int playerFunds = blackJackPlayer.getPlayerData().getPlayerFunds();
         if (playerFunds < betPlaced) {
             console.println("Sorry you do not have enough funds!");
-           placeBet();
+            placeBet();
         } else if (betPlaced < 0) {
             console.println("PLEASE DONT GIVE ME NEGATIVE MONEY!");
             placeBet();
@@ -114,17 +118,17 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
 
     public void dealFirstSetOfBlackJet (){
 
-            console.println("PlayerCard:");
-            CardGame.deal(deck, playerHand);
-            CardGame.deal(deck, playerHand);
-            playerHand.displayHands();
+        console.println("PlayerCard:");
+        CardGame.deal(deck, playerHand);
+        CardGame.deal(deck, playerHand);
+        playerHand.displayHands();
 
-            CardGame.deal(deck, dealerHand);
-            console.println("DealerCard:");
-            dealerHand.displayHands();
-            CardGame.deal(deck,dealerHand);
-            dealerValue=dealerHand.calculateCards(dealerHand);
-            playerValue =playerHand.calculateCards(playerHand);
+        CardGame.deal(deck, dealerHand);
+        console.println("DealerCard:");
+        dealerHand.displayHands();
+        CardGame.deal(deck,dealerHand);
+        dealerValue=dealerHand.calculateCards(dealerHand);
+        playerValue =playerHand.calculateCards(playerHand);
     }
 
     public void playPlayerHand( BlackJackHand playerHand ) {
@@ -157,14 +161,10 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
 
     public boolean  stand ( BlackJackHand hand){
         if (hand.equals(dealerHand)) {
-
             return true;
-
 
         } else if (hand.equals(playerHand)){
             return true;
-
-
         } return false;
     }
     public void hit(BlackJackHand hand) {
@@ -254,6 +254,8 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
 /*    public  void Stand(BlackJackHand playerHand){
         return playerHand.getSumOfHand()
     }*/
+
+
 
 
 }

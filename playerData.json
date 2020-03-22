@@ -70,4 +70,29 @@
     "BLACKJACK" : 0
   },
   "drunk" : false
+}, {
+  "id" : 7,
+  "name" : "moe",
+  "playerFunds" : 100,
+  "drinks" : 0,
+  "winnings" : {
+    "HIGHROLLER" : 0,
+    "BLACKJACK" : 0,
+    "GOFISH" : 0,
+    "CRAPS" : 0
+  },
+  "drunk" : false
+}, {
+  "id" : 8,
+  "name" : "2",
+  "playerFunds" : 100,
+  "drinks" : 0,
+  "winnings" : {
+    "HIGHROLLER" : 0,
+    "BLACKJACK" : 0,
+    "GOFISH" : 0,
+    "BLACKJACK2" : 0,
+    "CRAPS" : 0
+  },
+  "drunk" : false
 } ]

@@ -20,52 +20,54 @@ public class BlackJackHandTest {
         Assert.assertEquals(expected, actual);
     }
 
-   /* @Test
-    public void TestGetSumOfHand(){
+
+    @Test
+    public void calculateHandWithOneAceTest(){
         // Given
         BlackJackHand hand = new BlackJackHand();
 
         // When
-        hand.addCardToHand(new Card(Suit.CLUB, Face.FIVE ));
-        hand.addCardToHand(new Card(Suit.CLUB, Face.JACK ));
-        Integer expected = 15;
-        Integer actual = hand.getSumOfHand(false);
+        hand.addCardToHand(new Card(Suit.CLUB, Face.ACE ));
+        hand.addCardToHand(new Card(Suit.CLUB, Face.SEVEN ));
+        Integer expected = 18;
+        Integer actual = hand.calculateHand(hand);
 
         // Then
         Assert.assertEquals(expected, actual);
-
     }
 
     @Test
-    public void TestGetSumOfHandWithAce(){
+    public void calculateHandWithTwoAcesTest(){
         // Given
         BlackJackHand hand = new BlackJackHand();
 
         // When
-        hand.addCardToHand(new Card(Suit.CLUB, Face.FIVE ));
+        hand.addCardToHand(new Card(Suit.CLUB, Face.TWO ));
         hand.addCardToHand(new Card(Suit.CLUB, Face.ACE ));
-        Integer expected = 16;
-        Integer actual = hand.getSumOfHand(true);
+        hand.addCardToHand(new Card(Suit.CLUB, Face.ACE ));
+        Integer expected = 14;
+        Integer actual = hand.calculateHand(hand);
 
         // Then
         Assert.assertEquals(expected, actual);
-
-    }*/
+    }
 
     @Test
-    public void TestCalculateCards(){
+    public void calculateHandWithMultipleAcesTest(){
         // Given
         BlackJackHand hand = new BlackJackHand();
 
         // When
-        hand.addCardToHand(new Card(Suit.CLUB, Face.FIVE ));
-        hand.addCardToHand(new Card(Suit.CLUB, Face.JACK ));
-        Integer expected = 15;
-        Integer actual = hand.calculateCards(hand);
+        hand.addCardToHand(new Card(Suit.CLUB, Face.TWO ));
+        hand.addCardToHand(new Card(Suit.CLUB, Face.ACE ));
+        hand.addCardToHand(new Card(Suit.CLUB, Face.ACE ));
+        hand.addCardToHand(new Card(Suit.CLUB, Face.ACE ));
+        hand.addCardToHand(new Card(Suit.CLUB, Face.ACE ));
+        Integer expected = 16;
+        Integer actual = hand.calculateHand(hand);
 
         // Then
         Assert.assertEquals(expected, actual);
-
     }
 
 }
