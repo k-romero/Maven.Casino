@@ -46,7 +46,7 @@ public abstract class Hand {
     public void displayHandsWithSymbol(){
         Console con = new Console(System.in, System.out);
         for (Card c :cardsOnHand) {
-            con.println("[ "+c.toStringWithSymbol()+" ]");
+            con.print("[ "+c.toStringWithSymbol()+" ]");
         }
     }
     public int getNumOfCards(){
