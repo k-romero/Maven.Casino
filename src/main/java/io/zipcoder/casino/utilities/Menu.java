@@ -8,6 +8,7 @@ public enum Menu {
     HIGHROLLER("High Roller", "2", "h", "hr", "high","roller"),
     CRAPS("Craps", "3", "c", "cr", "crap"),
     BLACKJACK("Black Jack", "4", "b", "bj", "black", "jack"),
+    BLACKJACK2("Black Jack2", "6", "b2", "bj2", "black2", "jack2"),
     GOFISH("Go Fish","5","g", "gf", "fish", "go");
 
     private String name;

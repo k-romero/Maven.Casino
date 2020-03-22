@@ -4,17 +4,19 @@ import io.zipcoder.casino.tools.Card;
 import io.zipcoder.casino.tools.Face;
 import io.zipcoder.casino.tools.Hand;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BlackJackHand extends Hand {
 
-    private int handValue;
+    private List<Card> playerHand;
 
     public BlackJackHand() {
-        //super.cardsOnHand = new ArrayList<>();
-
+        this.playerHand = new ArrayList<>();
     }
 
     public int calculateHand(Hand hand){
-        handValue = 0;
+        int handValue = 0;
         Boolean containsAce = false;
         for (Card c : hand.getCardsOnHand()){
             int value = c.getFace().getAltValue();

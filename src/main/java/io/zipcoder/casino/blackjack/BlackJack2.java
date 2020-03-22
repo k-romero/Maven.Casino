@@ -32,7 +32,7 @@ public class BlackJack2 extends CardGame implements GamblingGame, GameControl {
             dealFirstHandOfBlackJack();
             promptPlayerForAction();
             playDealerHand();
-            determineWinner(playerHandValue, dealerHandValue);
+            determineWinner(playerHand, dealerHand);
             playerFundsAvailable();
         }
     }
@@ -47,7 +47,6 @@ public class BlackJack2 extends CardGame implements GamblingGame, GameControl {
     }
 
     public void placeBet() {
-
         int bet = console.getIntegerInput("Place your bet!");
         if (bet < 0){
             console.println("No negatives!\nYou have " + guest.getPlayerData().getPlayerFunds() + " in your account.");
@@ -62,12 +61,11 @@ public class BlackJack2 extends CardGame implements GamblingGame, GameControl {
         else {
             betPlaced = bet;
             guest.getPlayerData().reducePlayerFunds(bet);
-            console.println(guest.getPlayerData().getName() + "bet $" + bet + ". Your current funds are $" + guest.getPlayerData().getPlayerFunds());
+            console.println(guest.getPlayerData().getName() + "bet $" + bet + ". Your current funds are $" + guest.getPlayerData().getPlayerFunds() + "!");
         }
-
-
     }
 
+    // Deals Initial Hands to Players
     public void dealFirstHandOfBlackJack(){
         console.println("Player Cards: ");
         CardGame.deal(deck, playerHand);
@@ -101,31 +99,38 @@ public class BlackJack2 extends CardGame implements GamblingGame, GameControl {
     }
 
     public void promptPlayerForAction(){
-
-        int userInput = this.console.getIntegerInput("To STAND press --> 1\nTo HIT press --> 2");
-        if (playerHandValue < 21 && userInput == 2) {
-            hit(playerHand);
-            checkForPlayerBJ(playerHandValue);
-            playerHandValue = getHandValue(playerHand);
-        } else if (userInput == 1) {
-            stand(playerHand);
+        while(!checkHandForBust(playerHand)){
+            console.print("You currently have a " + playerHandValue + "\n");
+            int userInput = this.console.getIntegerInput("To STAND press --> 1\nTo HIT press --> 2");
+            if (playerHandValue < 21 && userInput == 2) {
+                hit(playerHand);
+                playerHandValue = getHandValue(playerHand);
+            } else if (userInput == 1) {
+                stand(playerHand);
+                break;
+            }
         }
-
     }
 
-    public void playDealerHand(){
+    public void playDealerHand() {
         dealerHand.displayHandsWithSymbol();
-        while(dealerHandValue < 17 && checkHandForBust(dealerHand) ){
+        while (dealerHandValue < 17) {
+            console.print("Dealer currently has a " + dealerHandValue + "\n");
             hit(dealerHand);
             dealerHandValue = getHandValue(dealerHand);
         }
+        if(checkHandForBust(dealerHand)){
+            guest.payOut(betPlaced);
+        }
     }
+
 
     public void hit(BlackJackHand hand){
         CardGame.deal(deck, hand);
+        hand.displayHandsWithSymbol();
     }
 
-    public void stand(BlackJackHand hand) {
+    public void stand(BlackJackHand hand){
         hand.displayHandsWithSymbol();
     }
 
@@ -133,51 +138,55 @@ public class BlackJack2 extends CardGame implements GamblingGame, GameControl {
         return getHandValue(hand) > 21;
     }
 
-    public boolean checkForPlayerBJ(int value){
-        if(value == 21) {
-            guest.payOut(betPlaced * 2);
-            console.print("BlackJack!! You won! Your current funds are $" + guest.getPlayerData().getPlayerFunds());
-            continueGameOrEnd();
-        }
-        return value == 21;
-    }
-
-    public int determineWinner(int pval, int dval){
-        if(playerWins(pval, dval)){
-            return 1;
-        } else if(dealerWins(pval, dval)) {
-            return -1;
-        } else {
-            guest.payOut(betPlaced);
-            console.print("It's a Push. $" + betPlaced + " will be put back into your funds.\n" + "Your current funds are $" + guest.getPlayerData().getPlayerFunds());
-            continueGameOrEnd();
-            return 0;
-        }
-    }
-
-    public boolean playerWins(int p, int d){
-        if(p > d){
-            guest.payOut(betPlaced);
-            console.print("Congrats you won $" + betPlaced + ". Your current funds are $" + guest.getPlayerData().getPlayerFunds());
-            continueGameOrEnd();
+    public boolean checkForBlackJack(BlackJackHand hand){
+        if(getHandValue(hand) == 21) {
             return true;
         }
         return false;
     }
 
-    public boolean dealerWins(int p, int d){
-        if(p < d){
-            console.print("Sorry pal you lost!. Your current funds are $" + guest.getPlayerData().getPlayerFunds());
-            continueGameOrEnd();
-            return true;
+    public void determineWinner(BlackJackHand player, BlackJackHand dealer){
+        checkForBlackJack(player);
+        if(getHandValue(player) > getHandValue(dealer)) {
+            printWinningMessage();
+        }else if(getHandValue(player) < getHandValue(dealer)){
+            printLosingMessage();
+        }else{
+            printPushMessage();
         }
-        return false;
     }
 
+    public void printBlackJackMessage(){
+        guest.payOut(betPlaced * 3);
+        console.print("BLACKJACK! You won $" + betPlaced * 3 + "You now have $" + guest.getPlayerData().getPlayerFunds() + "!\n");
+        continueGameOrEnd();
+    }
+
+    public void printDealerHasBlackJack(){
+        console.print("Dealer has BlackJack! You now have $" + guest.getPlayerData().getPlayerFunds() + " in your account!\n");
+        continueGameOrEnd();
+    }
+
+    public void printWinningMessage(){
+        guest.payOut(betPlaced * 2);
+        console.print("Congrats you won $"+ betPlaced + " "+ "You now have $" + guest.getPlayerData().getPlayerFunds() + " in your account!\n");
+        continueGameOrEnd();
+    }
+
+    public void printLosingMessage(){
+        console.print("Sorry pal you lost. You still have $" + guest.getPlayerData().getPlayerFunds() + " in your account!\n");
+        continueGameOrEnd();
+    }
+
+    public void printPushMessage() {
+        guest.payOut(betPlaced);
+        console.print("It's a Push. $" + betPlaced + " will be put back into your funds.\n" + "Your current funds are $" + guest.getPlayerData().getPlayerFunds() + "!\n");
+        continueGameOrEnd();
+    }
 
     public boolean continueGameOrEnd(){
-        boolean decision = true;
-        String result = console.getStringInput("Type 'continue' to place another bet or 'end' to leave the table.");
+        boolean decision;
+        String result = console.getStringInput("Type 'continue' to place another bet or 'end' to leave the table.\n");
         if(result.equalsIgnoreCase("continue")){
             playerHand.getCardsOnHand().clear();
             dealerHand.getCardsOnHand().clear();
@@ -200,11 +209,12 @@ public class BlackJack2 extends CardGame implements GamblingGame, GameControl {
                 " | |_) | | | | (_| | | (__  |   <    | |_| | | (_| | | (__  |   <   \n" +
                 " |____/  |_|  \\__,_|  \\___| |_|\\_\\    \\___/   \\__,_|  \\___| |_|\\_\\  \n" +
                 "                                                                    \n\n\n" +
-                "Welcome to BlackJack!";
+                "Welcome to BlackJack!\n";
         return result;
     }
 
     @Override
     public void end(Player p1) {
     }
+
 }

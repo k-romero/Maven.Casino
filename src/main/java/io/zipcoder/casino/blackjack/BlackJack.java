@@ -40,6 +40,8 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
             console.println("Welcome to Black Jack....");
             placeBet();
             blackJackPlayer.getPlayerData().reducePlayerFunds(betPlaced);
+
+
             console.println( "your new balance is: "+ blackJackPlayer.getPlayerData().getPlayerFunds());
             deck.shuffleDeck();
             dealFirstSetOfBlackJet();
@@ -159,14 +161,10 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
 
     public boolean  stand ( BlackJackHand hand){
         if (hand.equals(dealerHand)) {
-
             return true;
-
 
         } else if (hand.equals(playerHand)){
             return true;
-
-
         } return false;
     }
     public void hit(BlackJackHand hand) {
@@ -256,6 +254,8 @@ public class BlackJack extends CardGame implements GamblingGame, GameControl {
 /*    public  void Stand(BlackJackHand playerHand){
         return playerHand.getSumOfHand()
     }*/
+
+
 
 
 }

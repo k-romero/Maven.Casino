@@ -1,6 +1,7 @@
 package io.zipcoder.casino;
 
 import io.zipcoder.casino.blackjack.BlackJack;
+import io.zipcoder.casino.blackjack.BlackJack2;
 import io.zipcoder.casino.craps.Craps;
 import io.zipcoder.casino.gofish.GoFish;
 import io.zipcoder.casino.highroller.HighRoller;
@@ -123,6 +124,7 @@ public class Casino {
         selection.put(Menu.CRAPS, ()-> startCrapsSession(p));
         selection.put(Menu.BLACKJACK, ()-> startBlackJackSession(p));
         selection.put(Menu.GOFISH, ()-> startGoFishSession(p));
+        selection.put(Menu.BLACKJACK2, () -> startBlackJack2Session(p));
     }
 
 
@@ -212,6 +214,10 @@ public class Casino {
         game.start(p);
     }
 
+    public static void startBlackJack2Session(Player p){
+        BlackJack2 game = new BlackJack2();
+        game.start(p);
+    }
 
     public static String stringOfALine(String sideSymbol, String lineSymbol, int width){
         StringBuilder theLine = new StringBuilder(sideSymbol);
